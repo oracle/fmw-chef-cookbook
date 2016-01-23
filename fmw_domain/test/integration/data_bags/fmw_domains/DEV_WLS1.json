@@ -1,0 +1,9 @@
+{
+    "id":                            "DEV_WLS1",
+    "domain_name":                   "base",
+    "weblogic_user":                 "weblogic",
+    "weblogic_password":             "Welcome01",
+    "adminserver_name":              "AdminServer",
+    "adminserver_listen_address":    "10.10.10.135",
+    "adminserver_listen_port":       "7001"
+}

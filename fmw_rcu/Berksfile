@@ -1,0 +1,9 @@
+source "https://supermarket.chef.io"
+
+metadata
+
+group :integration do
+  cookbook 'fmw_jdk',  path: '../fmw_jdk'
+  cookbook 'fmw_wls',  path: '../fmw_wls'
+  cookbook 'fmw_inst', path: '../fmw_inst'
+end

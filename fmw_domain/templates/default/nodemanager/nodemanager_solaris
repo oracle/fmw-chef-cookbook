@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NODEMANAGER_HOME=<%= @nodemanager_bin_path %>
+USER=<%= @os_user %>
+
+export NODEMANAGER_HOME
+export USER
+ 
+case "$1" in
+    'start')
+    # start nodemanager
+    su $USER -c "$NODEMANAGER_HOME/startNodeManager.sh &"
+;;
+    'stop')
+    # stop nodemanager
+    su $USER -c "$NODEMANAGER_HOME/stopNodeManager.sh"
+;;
+    'restart')
+    su $USER -c "$NODEMANAGER_HOME/stopNodeManager.sh"
+    su $USER -c "$NODEMANAGER_HOME/startNodeManager.sh &"
+;;
+esac

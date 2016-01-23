@@ -1,0 +1,173 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: debian-7.2.0
+    driver_config:
+      customize:
+        memory: 2048
+        cpus: 1
+      synced_folders:
+        - ["C:/software", "/software"]
+  - name: oel-7.0
+    driver_config:
+      box: OEL-7.0_BS-x86_64
+      customize:
+        memory: 2048
+        cpus: 1
+      synced_folders:
+        - ["C:/software", "/software"]
+  - name: oel-6.6
+    driver_config:
+      box: OEL-6.6
+      customize:
+        memory: 2048
+        cpus: 1
+      synced_folders:
+        - ["C:/software", "/software"]
+  - name: oel-5.8
+    driver_config:
+      box: OEL-5.8
+      customize:
+        memory: 2048
+        cpus: 1
+      synced_folders:
+        - ["C:/software", "/software"]
+  - name: windows-2012r2
+    transport:
+      name: winrm
+    driver_config:
+      box: win2012r2
+      customize:
+        memory: 4096
+        cpus: 2
+      synced_folders:
+        - ["C:/software", "/software"]
+  - name: windows-8.1
+    transport:
+      name: winrm
+    driver_config:
+      box: win81x64
+      customize:
+        memory: 4096
+        cpus: 2
+      synced_folders:
+        - ["C:/software", "/software"]
+
+suites:
+  - name: wls1213
+    data_bags_path: "test/integration/data_bags"
+    run_list:
+      - recipe[fmw_jdk::install]
+      - recipe[fmw_jdk::rng_service]
+      - recipe[fmw_wls::setup]
+      - recipe[fmw_wls::install]
+      - recipe[fmw_inst::soa_suite]
+      - recipe[fmw_rcu::soa_suite]
+    attributes:
+      fmw:
+        java_home_dir:           "/usr/java/jdk1.7.0_75"
+        middleware_home_dir:     "/opt/oracle/middleware_1213"
+        version:                 "12.1.3"
+      fmw_jdk:
+        source_file:             "/software/jdk-7u75-linux-x64.tar.gz"
+      fmw_wls:
+        source_file:             "/software/fmw_12.1.3.0.0_infrastructure.jar"
+        install_type:            "infra"
+      fmw_inst:
+        soa_suite_source_file:   "/software/fmw_12.1.3.0.0_soa_Disk1_1of1.zip"
+      fmw_rcu:
+        databag_key:             "entry10"
+        rcu_prefix:              "DEV10"
+        oracle_home_dir:         "/opt/oracle/middleware_1213/oracle_common"
+        jdbc_database_url:       "jdbc:oracle:thin:@10.10.10.15:1521/soarepos.example.com"
+        db_database_url:         "10.10.10.15:1521:soarepos.example.com"
+    excludes:
+      - windows-2012r2
+      - windows-8.1
+  - name: wls1213_win
+    data_bags_path: "test/integration/data_bags"
+    run_list:
+      - recipe[fmw_jdk::install]
+      - recipe[fmw_wls::install]
+      - recipe[fmw_inst::soa_suite]
+      - recipe[fmw_rcu::soa_suite]
+    attributes:
+      fmw:
+        java_home_dir:           "c:\\java\\jdk1.7.0_75"
+        middleware_home_dir:     "c:\\oracle\\middleware_1213"
+        version:                 "12.1.3"
+        tmp_dir:                 "C:\\Users\\vagrant\\AppData\\Local\\temp"
+      fmw_jdk:
+        source_file:             "c:\\software\\jdk-7u75-windows-x64.exe"
+      fmw_wls:
+        source_file:             "c:\\software\\fmw_12.1.3.0.0_infrastructure.jar"
+        install_type:            "infra"
+      fmw_inst:
+        soa_suite_source_file:   "c:\\software\\fmw_12.1.3.0.0_soa_Disk1_1of1.zip"
+      fmw_rcu:
+        databag_key:             "entry12"
+        rcu_prefix:              "DEV12"
+        oracle_home_dir:         "c:\\oracle\\middleware_1213\\oracle_common"
+        jdbc_database_url:       "jdbc:oracle:thin:@10.10.10.15:1521/soarepos.example.com"
+        db_database_url:         "10.10.10.15:1521:soarepos.example.com"
+    excludes:
+      - debian-7.2.0
+      - oel-7.0
+      - oel-6.6
+  - name: wls1036
+    data_bags_path: "test/integration/data_bags"
+    run_list:
+      - recipe[fmw_jdk::install]
+      - recipe[fmw_jdk::rng_service]
+      - recipe[fmw_wls::setup]
+      - recipe[fmw_wls::install]
+      - recipe[fmw_rcu::soa_suite]
+    attributes:
+      fmw:
+        java_home_dir:           "/usr/java/jdk1.7.0_75"
+        middleware_home_dir:     "/opt/oracle/middleware_1036"
+        version:                 "10.3.6"
+      fmw_jdk:
+        source_file:             "/software/jdk-7u75-linux-x64.tar.gz"
+      fmw_wls:
+        source_file:             "/software/wls1036_generic.jar"
+      fmw_rcu:
+        databag_key:             "entry11"
+        rcu_prefix:              "DEV11"
+        source_file:             "/software/ofm_rcu_linux_11.1.1.7.0_64_disk1_1of1.zip"
+        jdbc_database_url:       "jdbc:oracle:thin:@10.10.10.15:1521/soarepos.example.com"
+        db_database_url:         "10.10.10.15:1521:soarepos.example.com"
+    excludes:
+      - windows-2012r2
+      - windows-8.1
+  - name: wls1036_win
+    data_bags_path: "test/integration/data_bags"
+    run_list:
+      - recipe[fmw_jdk::install]
+      - recipe[fmw_wls::install]
+      - recipe[fmw_rcu::soa_suite]
+    attributes:
+      fmw:
+        java_home_dir:           "c:\\java\\jdk1.7.0_75"
+        middleware_home_dir:     "c:\\oracle\\middleware_1036"
+        version:                 "10.3.6"
+        tmp_dir:                 "C:\\Users\\vagrant\\AppData\\Local\\temp"
+      fmw_jdk:
+        source_file:             "c:\\software\\jdk-7u75-windows-x64.exe"
+      fmw_wls:
+        source_file:             "c:\\software\\wls1036_generic.jar"
+      fmw_rcu:
+        databag_key:             "entry13"
+        rcu_prefix:              "DEV13"
+        source_file:             "c:\\software\\ofm_rcu_win_11.1.1.7.0_32_disk1_1of1.zip"
+        jdbc_database_url:       "jdbc:oracle:thin:@10.10.10.15:1521/soarepos.example.com"
+        db_database_url:         "10.10.10.15:1521:soarepos.example.com"
+    excludes:
+      - debian-7.2.0
+      - oel-7.0
+      - oel-6.6

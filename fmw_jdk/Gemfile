@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+gem 'berkshelf'
+gem 'rake', '>= 10.3'
+gem 'rubocop', '= 0.23'
+gem 'guard', '>= 2.6'
+gem 'guard-rubocop', '>= 1.1'
+gem 'foodcritic'
+gem 'chefspec', '= 4.2.0'
+gem 'yard-chef'
+
+gem 'rspec', :require => false

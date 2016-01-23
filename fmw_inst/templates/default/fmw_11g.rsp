@@ -1,0 +1,16 @@
+[ENGINE]
+Response File Version=1.0.0.0.0
+[GENERIC]
+SPECIFY_DOWNLOAD_LOCATION=false
+SKIP_SOFTWARE_UPDATES=true
+SOFTWARE_UPDATES_DOWNLOAD_LOCATION=
+ORACLE_HOME=<%= @oracle_home %>
+MIDDLEWARE_HOME=<%= @middleware_home_dir %>
+<% @option_array.each do |value| -%>
+    <% unless value.empty? -%>
+       <%= value %>
+    <% end %>
+<% end %>
+[SYSTEM]
+[APPLICATIONS]
+[RELATIONSHIPS]
