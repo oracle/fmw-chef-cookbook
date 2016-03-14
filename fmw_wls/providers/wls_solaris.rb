@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # wls provider for solaris
-provides :fmw_wls_wls, os: 'solaris2'
+provides :fmw_wls_wls, os: 'solaris2' if respond_to?(:provides)
 
 def whyrun_supported?
   true

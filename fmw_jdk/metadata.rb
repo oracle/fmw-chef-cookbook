@@ -4,7 +4,7 @@ maintainer_email 'fmw-chef-and-puppet_ww@oracle.com'
 license          'MIT'
 description      'Installs Oracle JDK 7,8 on any Windows, Linux or Solaris host'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.0'
+version          '0.1.1'
 
 recipe            "fmw_jdk",
                   "This is an empty recipe and does not do anything"

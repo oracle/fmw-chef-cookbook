@@ -17,6 +17,7 @@ domain_params =  begin
               rescue Net::HTTPServerException, Chef::Exceptions::ValidationFailed, Chef::Exceptions::InvalidDataBagPath
                 [] # empty array for length comparison
               end
+domain_params = domain_params.to_hash if domain_params.instance_of? Chef::EncryptedDataBagItem
 
 fail 'did not find the data_bag_item' if domain_params.length == 0
 
@@ -90,29 +91,68 @@ if node['os'].include?('linux')
               os_user:                     node['fmw']['os_user'])
   end
 
-  fmw_domain_nodemanager_service script_name do
-    user_home_dir node['fmw']['user_home_dir']
-    os_user node['fmw']['os_user']
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 nodemanager" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainNodemanagerServiceRedhat.new(script_name, run_context )  if (node['platform_family'] == 'rhel' and node['platform_version'] < '7.0')
+        res = Chef::Resource::Chef::Resource::FmwDomainNodemanagerServiceRedhat7.new(script_name, run_context ) if (node['platform_family'] == 'rhel' and node['platform_version'] >= '7.0')
+        res = Chef::Resource::Chef::Resource::FmwDomainNodemanagerServiceDebian.new(script_name, run_context )  if (node['platform_family'] == 'debian')
+        res.user_home_dir node['fmw']['user_home_dir']
+        res.os_user       node['fmw']['os_user']
+        res.run_action    :configure
+      end
+    end
+  else
+    fmw_domain_nodemanager_service script_name do
+      user_home_dir node['fmw']['user_home_dir']
+      os_user       node['fmw']['os_user']
+    end
   end
-
 elsif node['os'].include?('solaris2')
 
-  fmw_domain_nodemanager_service script_name do
-    bin_dir bin_dir
-    tmp_dir node['fmw']['tmp_dir']
-    os_user node['fmw']['os_user']
-    service_name script_name
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 nodemanager" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainNodemanagerServiceSolaris.new(script_name, run_context )
+        res.bin_dir      bin_dir
+        res.tmp_dir      node['fmw']['tmp_dir']
+        res.os_user      node['fmw']['os_user']
+        res.service_name script_name
+        res.run_action   :configure
+      end
+    end
+  else
+    fmw_domain_nodemanager_service script_name do
+      bin_dir bin_dir
+      tmp_dir node['fmw']['tmp_dir']
+      os_user node['fmw']['os_user']
+      service_name script_name
+    end
   end
-
 elsif node['os'].include?('windows')
 
-  fmw_domain_nodemanager_service script_name do
-    domain_dir  "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}"
-    domain_name domain_params['domain_name']
-    version node['fmw']['version']
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    bin_dir bin_dir
-    java_home_dir node['fmw']['java_home_dir']
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 nodemanager" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainNodemanagerServiceWindows.new(script_name, run_context )
+        res.domain_dir          "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}"
+        res.domain_name         domain_params['domain_name']
+        res.version             node['fmw']['version']
+        res.middleware_home_dir node['fmw']['middleware_home_dir']
+        res.bin_dir             bin_dir
+        res.java_home_dir       node['fmw']['java_home_dir']
+        res.run_action          :configure
+      end
+    end
+  else
+    fmw_domain_nodemanager_service script_name do
+      domain_dir          "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}"
+      domain_name         domain_params['domain_name']
+      version             node['fmw']['version']
+      middleware_home_dir node['fmw']['middleware_home_dir']
+      bin_dir             bin_dir
+      java_home_dir       node['fmw']['java_home_dir']
+    end
   end
 
 end

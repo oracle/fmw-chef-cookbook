@@ -6,7 +6,7 @@
 #
 # fmw_extract provider for windows
 
-provides :fmw_inst_fmw_extract, os: 'windows'
+provides :fmw_inst_fmw_extract, os: 'windows' if respond_to?(:provides)
 
 def whyrun_supported?
   true

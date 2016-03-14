@@ -5,9 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # nodemanager_service provider for windows
-provides :fmw_domain_nodemanager_service, os: 'windows'
+provides :fmw_domain_nodemanager_service, os: 'windows' if respond_to?(:provides)
 
 require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
 def whyrun_supported?
   true

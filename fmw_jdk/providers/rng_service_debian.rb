@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # rng service provider for Debian family
-provides :fmw_jdk_rng_service, os: 'linux', platform_family: 'debian'
+provides :fmw_jdk_rng_service, os: 'linux', platform_family: 'debian' if respond_to?(:provides)
 
 def whyrun_supported?
   true

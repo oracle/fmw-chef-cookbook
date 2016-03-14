@@ -5,8 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # rng service provider for RedHat 7 family
-provides :fmw_jdk_rng_service, os: 'linux', platform_family: 'rhel' do |node|
-  node['platform_version'] >= '7.0'
+if respond_to?(:provides)
+  provides :fmw_jdk_rng_service, os: 'linux', platform_family: 'rhel' do |node|
+    node['platform_version'] >= '7.0'
+  end
 end
 
 def whyrun_supported?

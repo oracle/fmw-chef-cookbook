@@ -16,6 +16,7 @@ define :wls_template, :unix => true, :middleware_home_dir => nil, :tmp_dir => ni
 
   # add the webLogic silent response
   template "#{params[:tmp_dir]}/#{params[:template]}" do
+    cookbook 'fmw_wls'
     source params[:template]
     mode   0755              if params[:unix]
     owner  params[:os_user]  if params[:unix]

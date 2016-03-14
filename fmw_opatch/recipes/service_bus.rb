@@ -23,25 +23,61 @@ elsif ['10.3.6'].include?(node['fmw']['version'])
   end
 end
 
-fmw_opatch_fmw_extract node['fmw_opatch']['service_bus_patch_id'] do
-  action              :extract
-  source_file         node['fmw_opatch']['service_bus_source_file']
-  os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
-  os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
-  tmp_dir             node['fmw']['tmp_dir']
-  middleware_home_dir node['fmw']['middleware_home_dir'] if node['os'].include?('windows')
-  version             node['fmw']['version']             if node['os'].include?('windows')
-end
+if VERSION.start_with? '11.'
+  ruby_block "loading for chef 11 opatch service bus extract" do
+    block do
+      if node['os'].include?('windows')
+        res = Chef::Resource::Chef::Resource::FmwOpatchFmwExtractWindows.new(node['fmw_opatch']['service_bus_patch_id'], run_context )
+      else
+        res = Chef::Resource::Chef::Resource::FmwOpatchFmwExtract.new(node['fmw_opatch']['service_bus_patch_id'], run_context )
+      end
+      res.source_file         node['fmw_opatch']['service_bus_source_file']
+      res.os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
+      res.os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
+      res.tmp_dir             node['fmw']['tmp_dir']
+      res.middleware_home_dir node['fmw']['middleware_home_dir'] if node['os'].include?('windows')
+      res.version             node['fmw']['version']             if node['os'].include?('windows')
+      res.run_action          :extract
+    end
+  end
+  ruby_block "loading for chef 11 opatch service bus  apply" do
+    block do
+      if node['os'].include?('windows')
+        res2 = Chef::Resource::Chef::Resource::FmwOpatchOpatchWindows.new(node['fmw_opatch']['service_bus_patch_id'], run_context )
+      else
+        res2 = Chef::Resource::Chef::Resource::FmwOpatchOpatch.new(node['fmw_opatch']['service_bus_patch_id'], run_context )
+      end
+      res2.patch_id            node['fmw_opatch']['service_bus_patch_id']
+      res2.oracle_home_dir     fmw_oracle_home
+      res2.java_home_dir       node['fmw']['java_home_dir']
+      res2.orainst_dir         node['fmw']['orainst_dir']         if ['solaris2', 'linux'].include?(node['os'])
+      res2.os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
+      res2.os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
+      res2.tmp_dir             node['fmw']['tmp_dir']
+      res2.run_action          :apply
+    end
+  end
+else
+  fmw_opatch_fmw_extract node['fmw_opatch']['service_bus_patch_id'] do
+    action              :extract
+    source_file         node['fmw_opatch']['service_bus_source_file']
+    os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
+    os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
+    tmp_dir             node['fmw']['tmp_dir']
+    middleware_home_dir node['fmw']['middleware_home_dir'] if node['os'].include?('windows')
+    version             node['fmw']['version']             if node['os'].include?('windows')
+  end
 
-fmw_opatch_opatch node['fmw_opatch']['service_bus_patch_id'] do
-  action              :apply
-  patch_id            node['fmw_opatch']['service_bus_patch_id']
-  oracle_home_dir     fmw_oracle_home
-  java_home_dir       node['fmw']['java_home_dir']
-  orainst_dir         node['fmw']['orainst_dir']         if ['solaris2', 'linux'].include?(node['os'])
-  os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
-  os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
-  tmp_dir             node['fmw']['tmp_dir']
+  fmw_opatch_opatch node['fmw_opatch']['service_bus_patch_id'] do
+    action              :apply
+    patch_id            node['fmw_opatch']['service_bus_patch_id']
+    oracle_home_dir     fmw_oracle_home
+    java_home_dir       node['fmw']['java_home_dir']
+    orainst_dir         node['fmw']['orainst_dir']         if ['solaris2', 'linux'].include?(node['os'])
+    os_user             node['fmw']['os_user']             if ['solaris2', 'linux'].include?(node['os'])
+    os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
+    tmp_dir             node['fmw']['tmp_dir']
+  end
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"

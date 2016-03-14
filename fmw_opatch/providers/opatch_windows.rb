@@ -5,9 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # opatch provider for windows
-provides :fmw_opatch_opatch, os: 'windows'
+provides :fmw_opatch_opatch, os: 'windows' if respond_to?(:provides)
 
 require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
 def whyrun_supported?
   true

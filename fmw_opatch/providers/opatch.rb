@@ -5,9 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # opatch provider for unix
-provides :fmw_opatch_opatch, os: [ 'linux', 'solaris2']
+provides :fmw_opatch_opatch, os: [ 'linux', 'solaris2'] if respond_to?(:provides)
 
 require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
 def whyrun_supported?
   true

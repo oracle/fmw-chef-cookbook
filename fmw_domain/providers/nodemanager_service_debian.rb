@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # nodemanager_service provider for Debian family
-provides :fmw_domain_nodemanager_service, os: 'linux', platform_family: 'debian'
+provides :fmw_domain_nodemanager_service, os: 'linux', platform_family: 'debian' if respond_to?(:provides)
 
 def whyrun_supported?
   true

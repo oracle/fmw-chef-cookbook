@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # wls provider for linux
-provides :fmw_wls_wls, os: 'linux'
+provides :fmw_wls_wls, os: 'linux' if respond_to?(:provides)
 
 def whyrun_supported?
   true

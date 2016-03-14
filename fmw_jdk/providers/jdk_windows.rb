@@ -6,7 +6,7 @@
 #
 # jdk provider for windows
 
-provides :fmw_jdk_jdk, os: 'windows'
+provides :fmw_jdk_jdk, os: 'windows' if respond_to?(:provides)
 
 def whyrun_supported?
   true

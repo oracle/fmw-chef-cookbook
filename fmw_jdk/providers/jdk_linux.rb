@@ -6,8 +6,10 @@
 #
 # jdk provider for linux and rpm as source
 
-provides :fmw_jdk_jdk, os: 'linux' do |node|
-  node['fmw_jdk']['install_type'] == 'tar.gz'
+if respond_to?(:provides)
+  provides :fmw_jdk_jdk, os: 'linux' do |node|
+    node['fmw_jdk']['install_type'] == 'tar.gz'
+  end
 end
 
 def whyrun_supported?

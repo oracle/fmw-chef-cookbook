@@ -58,11 +58,11 @@ describe 'fmw_inst::webcenter' do
 
     let(:chef_run) do
       runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '6.6') do |node|
-        node.set['fmw']['java_home_dir']               = '/usr/java/jdk1.7.0_75'
-        node.set['fmw']['version']                     = '10.3.6'
-        node.set['fmw']['middleware_home_dir']         = '/opt/oracle/middleware_xxx'
-        node.set['fmw_jdk']['source_file']             = '/software/jdk-7u75-linux-x64.tar.gz'
-        node.set['fmw_wls']['source_file']             = '/software/fmw_12.1.3.0.0_infrastructure.jar'
+        node.set['fmw']['java_home_dir']                = '/usr/java/jdk1.7.0_75'
+        node.set['fmw']['version']                      = '10.3.6'
+        node.set['fmw']['middleware_home_dir']          = '/opt/oracle/middleware_xxx'
+        node.set['fmw_jdk']['source_file']              = '/software/jdk-7u75-linux-x64.tar.gz'
+        node.set['fmw_wls']['source_file']              = '/software/fmw_12.1.3.0.0_infrastructure.jar'
         node.set['fmw_inst']['webcenter_source_file']   = '/software/ofm_wc_generic_11.1.1.9.0_disk1_1of2.zip'
         node.set['fmw_inst']['webcenter_source_2_file'] = '/software/ofm_wc_generic_11.1.1.9.0_disk1_2of2.zip'
       end
@@ -80,14 +80,14 @@ describe 'fmw_inst::webcenter' do
 
     let(:chef_run) do
       runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '6.6') do |node|
-        node.set['fmw']['java_home_dir']               = '/usr/java/jdk1.7.0_75'
-        node.set['fmw']['version']                     = '10.3.6'
-        node.set['fmw']['middleware_home_dir']         = '/opt/oracle/middleware_xxx'
-        node.set['fmw_jdk']['source_file']             = '/software/jdk-7u75-linux-x64.tar.gz'
-        node.set['fmw_wls']['source_file']             = '/software/fmw_12.1.3.0.0_infrastructure.jar'
+        node.set['fmw']['java_home_dir']                = '/usr/java/jdk1.7.0_75'
+        node.set['fmw']['version']                      = '10.3.6'
+        node.set['fmw']['middleware_home_dir']          = '/opt/oracle/middleware_xxx'
+        node.set['fmw_jdk']['source_file']              = '/software/jdk-7u75-linux-x64.tar.gz'
+        node.set['fmw_wls']['source_file']              = '/software/fmw_12.1.3.0.0_infrastructure.jar'
         node.set['fmw_inst']['webcenter_source_file']   = '/software/ofm_wc_generic_11.1.1.9.0_disk1_1of2.zip'
         node.set['fmw_inst']['webcenter_source_2_file'] = '/software/ofm_wc_generic_11.1.1.9.0_disk1_2of2.zip'
-        node.set['fmw_inst']['install_type'] = 'Typical'
+        node.set['fmw_inst']['install_type']            = 'Typical'
       end
       runner.converge(described_recipe)
     end

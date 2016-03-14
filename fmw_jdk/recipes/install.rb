@@ -46,11 +46,31 @@ elsif node['os'].include?('solaris2')
   end
 end
 
-fmw_jdk_jdk node['fmw']['java_home_dir'] do
-  action          :install
-  java_home_dir   node['fmw']['java_home_dir']
-  source_file     node['fmw_jdk']['source_file']
-  source_x64_file node['fmw_jdk']['source_x64_file'] if node['os'].include?('solaris2')
+if VERSION.start_with? '11.'
+  ruby_block "loading for chef 11 jdk install" do
+    block do
+      if node['os'].include?('linux')
+        res = Chef::Resource::Chef::Resource::FmwJdkJdkLinux.new( node['fmw']['java_home_dir'], run_context ) if node['fmw_jdk']['install_type'] == 'tar.gz'
+        res = Chef::Resource::Chef::Resource::FmwJdkJdkLinuxRpm.new( node['fmw']['java_home_dir'], run_context ) if node['fmw_jdk']['install_type'] == 'rpm'
+      elsif node['os'].include?('solaris2')
+        res = Chef::Resource::Chef::Resource::FmwJdkJdkSolaris.new( node['fmw']['java_home_dir'], run_context ) if node['fmwjdk']['install_type'] == 'tar.gz'
+        res = Chef::Resource::Chef::Resource::FmwJdkJdkSolarisZ.new( node['fmw']['java_home_dir'], run_context ) if node['fmwjdk']['install_type'] == 'tar.Z'
+      else
+        res = Chef::Resource::Chef::Resource::FmwJdkJdkWindows.new( node['fmw']['java_home_dir'], run_context )
+      end
+      res.java_home_dir   node['fmw']['java_home_dir']
+      res.source_file     node['fmw_jdk']['source_file']
+      res.source_x64_file node['fmw_jdk']['source_x64_file'] if node['os'].include?('solaris2')
+      res.run_action      :install
+    end
+  end
+else
+  fmw_jdk_jdk node['fmw']['java_home_dir'] do
+    action          :install
+    java_home_dir   node['fmw']['java_home_dir']
+    source_file     node['fmw_jdk']['source_file']
+    source_x64_file node['fmw_jdk']['source_x64_file'] if node['os'].include?('solaris2')
+  end
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"

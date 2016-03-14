@@ -16,6 +16,7 @@ domain_params =  begin
               rescue Net::HTTPServerException, Chef::Exceptions::ValidationFailed, Chef::Exceptions::InvalidDataBagPath
                 [] # empty array for length comparison
               end
+domain_params = domain_params.to_hash if domain_params.instance_of? Chef::EncryptedDataBagItem
 
 if node['fmw_domain'].attribute?('nodemanagers')
   # validate
@@ -81,17 +82,32 @@ if node['os'].include?('windows')
   end
 
   # create domain
-  fmw_domain_wlst "WLST create domain" do
-    version node['fmw']['version']
-    script_file "#{node['fmw']['tmp_dir']}/domain.py"
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    weblogic_home_dir node['fmw']['weblogic_home_dir']
-    java_home_dir node['fmw']['java_home_dir']
-    tmp_dir node['fmw']['tmp_dir']
-    weblogic_password domain_params['weblogic_password']
-    not_if { ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")}
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 domain" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainWlstWindows.new("WLST create domain", run_context )
+        res.version             node['fmw']['version']
+        res.script_file         "#{node['fmw']['tmp_dir']}/domain.py"
+        res.middleware_home_dir node['fmw']['middleware_home_dir']
+        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
+        res.java_home_dir       node['fmw']['java_home_dir']
+        res.tmp_dir             node['fmw']['tmp_dir']
+        res.weblogic_password   domain_params['weblogic_password']
+        res.run_action          :execute unless ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")
+      end
+    end
+  else
+    fmw_domain_wlst "WLST create domain" do
+      version node['fmw']['version']
+      script_file "#{node['fmw']['tmp_dir']}/domain.py"
+      middleware_home_dir node['fmw']['middleware_home_dir']
+      weblogic_home_dir node['fmw']['weblogic_home_dir']
+      java_home_dir node['fmw']['java_home_dir']
+      tmp_dir node['fmw']['tmp_dir']
+      weblogic_password domain_params['weblogic_password']
+      not_if { ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")}
+    end
   end
-
 else
   # add the common utils py script to the tmp dir
   cookbook_file node['fmw']['tmp_dir'] + '/common.py' do
@@ -135,16 +151,33 @@ else
   end
 
   # create domain
-  fmw_domain_wlst "WLST create domain" do
-    version node['fmw']['version']
-    script_file "#{node['fmw']['tmp_dir']}/domain.py"
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    weblogic_home_dir node['fmw']['weblogic_home_dir']
-    java_home_dir node['fmw']['java_home_dir']
-    tmp_dir node['fmw']['tmp_dir']
-    os_user node['fmw']['os_user']
-    weblogic_password domain_params['weblogic_password']
-    not_if { ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")}
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 domain" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainWlst.new("WLST create domain", run_context )
+        res.version             node['fmw']['version']
+        res.script_file         "#{node['fmw']['tmp_dir']}/domain.py"
+        res.middleware_home_dir node['fmw']['middleware_home_dir']
+        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
+        res.java_home_dir       node['fmw']['java_home_dir']
+        res.tmp_dir             node['fmw']['tmp_dir']
+        res.os_user             node['fmw']['os_user']
+        res.weblogic_password   domain_params['weblogic_password']
+        res.run_action          :execute unless ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")
+      end
+    end
+  else
+    fmw_domain_wlst "WLST create domain" do
+      version node['fmw']['version']
+      script_file "#{node['fmw']['tmp_dir']}/domain.py"
+      middleware_home_dir node['fmw']['middleware_home_dir']
+      weblogic_home_dir node['fmw']['weblogic_home_dir']
+      java_home_dir node['fmw']['java_home_dir']
+      tmp_dir node['fmw']['tmp_dir']
+      os_user node['fmw']['os_user']
+      weblogic_password domain_params['weblogic_password']
+      not_if { ::File.exists?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml")}
+    end
   end
 end
 

@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # fmw_extract provider for windows
-provides :fmw_rcu_repository, os: 'windows'
+provides :fmw_rcu_repository, os: 'windows' if respond_to?(:provides)
 
 def whyrun_supported?
   true
@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('repository provider, repository load current resource')
-  @current_resource ||= Chef::Resource::FmwRcuRepository.new(new_resource.name)
+  @current_resource ||= Chef::Resource::FmwRcuRepositoryWindows.new(new_resource.name)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
   @current_resource.oracle_home_dir(@new_resource.oracle_home_dir)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)

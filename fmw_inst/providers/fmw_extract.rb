@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # fmw_extract provider for unix
-provides :fmw_inst_fmw_extract, os: [ 'linux', 'solaris2']
+provides :fmw_inst_fmw_extract, os: [ 'linux', 'solaris2'] if respond_to?(:provides)
 
 def whyrun_supported?
   true

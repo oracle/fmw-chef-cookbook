@@ -15,6 +15,7 @@ rcu_params =  begin
                 [] # empty array for length comparison
               end
 
+rcu_params = rcu_params.to_hash if rcu_params.instance_of? Chef::EncryptedDataBagItem
 fail 'did not find the data_bag_item' if rcu_params.length == 0
 
 include_recipe 'fmw_wls::install'
@@ -83,23 +84,42 @@ if platform_family?('windows')
     source 'checkrcu.py'
     action :create
   end
-
-  fmw_rcu_repository node['fmw_rcu']['rcu_prefix'] do
-    action                 :create
-    java_home_dir          node['fmw']['java_home_dir']
-    oracle_home_dir        oracle_home_dir
-    middleware_home_dir    node['fmw']['middleware_home_dir']
-    version                node['fmw']['version']
-    jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
-    db_connect_url         node['fmw_rcu']['db_database_url']
-    db_connect_user        node['fmw_rcu']['db_sys_user']
-    db_connect_password    rcu_params['db_sys_password']
-    rcu_prefix             node['fmw_rcu']['rcu_prefix']
-    rcu_components         component_array
-    rcu_component_password rcu_params['rcu_component_password']
-    tmp_dir                node['fmw']['tmp_dir']
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 rcu" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwRcuRepositoryWindows.new(node['fmw_rcu']['rcu_prefix'], run_context )
+        res.java_home_dir          node['fmw']['java_home_dir']
+        res.oracle_home_dir        oracle_home_dir
+        res.middleware_home_dir    node['fmw']['middleware_home_dir']
+        res.version                node['fmw']['version']
+        res.jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
+        res.db_connect_url         node['fmw_rcu']['db_database_url']
+        res.db_connect_user        node['fmw_rcu']['db_sys_user']
+        res.db_connect_password    rcu_params['db_sys_password']
+        res.rcu_prefix             node['fmw_rcu']['rcu_prefix']
+        res.rcu_components         component_array
+        res.rcu_component_password rcu_params['rcu_component_password']
+        res.tmp_dir                node['fmw']['tmp_dir']
+        res.run_action             :create
+      end
+    end
+  else
+    fmw_rcu_repository node['fmw_rcu']['rcu_prefix'] do
+      action                 :create
+      java_home_dir          node['fmw']['java_home_dir']
+      oracle_home_dir        oracle_home_dir
+      middleware_home_dir    node['fmw']['middleware_home_dir']
+      version                node['fmw']['version']
+      jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
+      db_connect_url         node['fmw_rcu']['db_database_url']
+      db_connect_user        node['fmw_rcu']['db_sys_user']
+      db_connect_password    rcu_params['db_sys_password']
+      rcu_prefix             node['fmw_rcu']['rcu_prefix']
+      rcu_components         component_array
+      rcu_component_password rcu_params['rcu_component_password']
+      tmp_dir                node['fmw']['tmp_dir']
+    end
   end
-
 else
 
   cookbook_file "#{node['fmw']['tmp_dir']}/checkrcu.py" do
@@ -110,24 +130,46 @@ else
     mode 0775
   end
 
-  fmw_rcu_repository node['fmw_rcu']['rcu_prefix'] do
-    action                 :create
-    java_home_dir          node['fmw']['java_home_dir']
-    oracle_home_dir        oracle_home_dir
-    middleware_home_dir    node['fmw']['middleware_home_dir']
-    version                node['fmw']['version']
-    jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
-    db_connect_url         node['fmw_rcu']['db_database_url']
-    db_connect_user        node['fmw_rcu']['db_sys_user']
-    db_connect_password    rcu_params['db_sys_password']
-    rcu_prefix             node['fmw_rcu']['rcu_prefix']
-    rcu_components         component_array
-    rcu_component_password rcu_params['rcu_component_password']
-    os_user                node['fmw']['os_user']
-    os_group               node['fmw']['os_group']
-    tmp_dir                node['fmw']['tmp_dir']
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 rcu" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwRcuRepository.new(node['fmw_rcu']['rcu_prefix'], run_context )
+        res.java_home_dir          node['fmw']['java_home_dir']
+        res.oracle_home_dir        oracle_home_dir
+        res.middleware_home_dir    node['fmw']['middleware_home_dir']
+        res.version                node['fmw']['version']
+        res.jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
+        res.db_connect_url         node['fmw_rcu']['db_database_url']
+        res.db_connect_user        node['fmw_rcu']['db_sys_user']
+        res.db_connect_password    rcu_params['db_sys_password']
+        res.rcu_prefix             node['fmw_rcu']['rcu_prefix']
+        res.rcu_components         component_array
+        res.rcu_component_password rcu_params['rcu_component_password']
+        res.tmp_dir                node['fmw']['tmp_dir']
+        res.os_user                node['fmw']['os_user']
+        res.os_group               node['fmw']['os_group']
+        res.run_action             :create
+      end
+    end
+  else
+    fmw_rcu_repository node['fmw_rcu']['rcu_prefix'] do
+      action                 :create
+      java_home_dir          node['fmw']['java_home_dir']
+      oracle_home_dir        oracle_home_dir
+      middleware_home_dir    node['fmw']['middleware_home_dir']
+      version                node['fmw']['version']
+      jdbc_connect_url       node['fmw_rcu']['jdbc_database_url']
+      db_connect_url         node['fmw_rcu']['db_database_url']
+      db_connect_user        node['fmw_rcu']['db_sys_user']
+      db_connect_password    rcu_params['db_sys_password']
+      rcu_prefix             node['fmw_rcu']['rcu_prefix']
+      rcu_components         component_array
+      rcu_component_password rcu_params['rcu_component_password']
+      os_user                node['fmw']['os_user']
+      os_group               node['fmw']['os_group']
+      tmp_dir                node['fmw']['tmp_dir']
+    end
   end
-
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"

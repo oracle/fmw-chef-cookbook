@@ -8,6 +8,7 @@ define :ora_inst, :orainst_dir => nil, :ora_inventory_dir => nil, :os_group => n
 
   # add oraInst.loc to /etc for the oracle inventory location
   template "#{params[:orainst_dir]}/oraInst.loc" do
+    cookbook 'fmw_wls'
     source 'oraInst.loc'
     mode 0755
     variables(ora_inventory_dir: params[:ora_inventory_dir],

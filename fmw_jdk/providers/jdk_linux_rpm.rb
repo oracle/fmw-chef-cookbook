@@ -7,9 +7,12 @@
 # jdk provider for linux and rpm as source
 
 require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
-provides :fmw_jdk_jdk, os: 'linux', platform_family: 'rhel' do |node|
-  node['fmw_jdk']['install_type'] == 'rpm'
+if respond_to?(:provides)
+  provides :fmw_jdk_jdk, os: 'linux', platform_family: 'rhel' do |node|
+    node['fmw_jdk']['install_type'] == 'rpm'
+  end
 end
 
 def whyrun_supported?

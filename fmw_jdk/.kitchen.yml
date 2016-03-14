@@ -15,7 +15,7 @@ platforms:
         - ["C:/software", "/software"]
   - name: oel-7.0
     driver_config:
-      box: OEL-7.0_BS-x86_64
+      box: OEL-7.2-x86_64
       customize:
         memory: 2048
         cpus: 1
@@ -23,7 +23,7 @@ platforms:
         - ["C:/software", "/software"]
   - name: oel-6.6
     driver_config:
-      box: OEL-6.6
+      box: OEL6_6-x86_64
       customize:
         memory: 2048
         cpus: 1

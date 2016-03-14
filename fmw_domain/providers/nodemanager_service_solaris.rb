@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # nodemanager_service provider for Solaris
-provides :fmw_domain_nodemanager_service, os: 'solaris2'
+provides :fmw_domain_nodemanager_service, os: 'solaris2' if respond_to?(:provides)
 
 def whyrun_supported?
   true

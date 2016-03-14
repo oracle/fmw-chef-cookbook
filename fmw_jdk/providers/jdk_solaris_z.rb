@@ -6,8 +6,10 @@
 #
 # jdk provider for solaris
 
-provides :fmw_jdk_jdk, os: 'solaris2' do |node|
-  node['fmwjdk']['install_type'] == 'tar.Z'
+if respond_to?(:provides)
+  provides :fmw_jdk_jdk, os: 'solaris2' do |node|
+    node['fmwjdk']['install_type'] == 'tar.Z'
+  end
 end
 
 def whyrun_supported?

@@ -5,8 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # nodemanager_service provider for RedHat family
-provides :fmw_domain_nodemanager_service, os: 'linux', platform_family: 'rhel' do |node|
-  node['platform_version'] < '7.0'
+if respond_to?(:provides)
+  provides :fmw_domain_nodemanager_service, os: 'linux', platform_family: 'rhel' do |node|
+    node['platform_version'] < '7.0'
+  end
 end
 
 def whyrun_supported?

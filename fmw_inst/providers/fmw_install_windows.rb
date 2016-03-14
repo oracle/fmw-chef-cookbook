@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # fmw_install provider for windows
-provides :fmw_inst_fmw_install, os: 'windows'
+provides :fmw_inst_fmw_install, os: 'windows' if respond_to?(:provides)
 
 def whyrun_supported?
   true

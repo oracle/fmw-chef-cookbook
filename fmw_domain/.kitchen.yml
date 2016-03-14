@@ -17,7 +17,7 @@ platforms:
         - ["private_network", {ip: "10.10.10.135"}]
   - name: oel-7.0
     driver_config:
-      box: OEL-7.0_BS-x86_64
+      box: OEL-7.2-x86_64
       customize:
         memory: 2048
         cpus: 1
@@ -109,7 +109,7 @@ suites:
       fmw_jdk:
         source_file:         "/software/jdk-8u40-linux-x64.tar.gz"
       fmw_wls:
-        source_file:         "/software/wls_generic.jar"
+        source_file:         "/software/fmw_12.2.1.0.0_wls.jar"
       fmw_domain:
         databag_key:                "DEV_WLS1"
         domains_dir:                "/opt/oracle/middleware_1221/user_projects/domains"

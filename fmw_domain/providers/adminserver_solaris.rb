@@ -5,9 +5,10 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # Adminserver control on a solaris host
-provides :fmw_domain_adminserver, os: 'solaris2'
+provides :fmw_domain_adminserver, os: 'solaris2' if respond_to?(:provides)
 
 require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
 def whyrun_supported?
   true

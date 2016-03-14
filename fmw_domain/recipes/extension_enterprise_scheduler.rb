@@ -16,6 +16,7 @@ domain_params =  begin
               rescue Net::HTTPServerException, Chef::Exceptions::ValidationFailed, Chef::Exceptions::InvalidDataBagPath
                 [] # empty array for length comparison
               end
+domain_params = domain_params.to_hash if domain_params.instance_of? Chef::EncryptedDataBagItem
 
 fail 'did not find the data_bag_item' if domain_params.length == 0
 
@@ -95,18 +96,33 @@ if node['os'].include?('windows')
   end
 
   # add domain extension enterprise_scheduler
-  fmw_domain_wlst "WLST add enterprise_scheduler domain extension" do
-    version node['fmw']['version']
-    script_file "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    weblogic_home_dir node['fmw']['weblogic_home_dir']
-    java_home_dir node['fmw']['java_home_dir']
-    tmp_dir node['fmw']['tmp_dir']
-    repository_password domain_params['repository_password']
-    not_if {  ::File.exist?("#{domain_path}/config/config.xml") == true and
-              ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0  }
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 extension enterprise_scheduler" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainWlstWindows.new("WLST add enterprise_scheduler domain extension", run_context )
+        res.version             node['fmw']['version']
+        res.script_file         "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
+        res.middleware_home_dir node['fmw']['middleware_home_dir']
+        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
+        res.java_home_dir       node['fmw']['java_home_dir']
+        res.tmp_dir             node['fmw']['tmp_dir']
+        res.repository_password domain_params['repository_password']
+        res.run_action          :execute unless ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0
+      end
+    end
+  else
+    fmw_domain_wlst "WLST add enterprise_scheduler domain extension" do
+      version             node['fmw']['version']
+      script_file         "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
+      middleware_home_dir node['fmw']['middleware_home_dir']
+      weblogic_home_dir   node['fmw']['weblogic_home_dir']
+      java_home_dir       node['fmw']['java_home_dir']
+      tmp_dir             node['fmw']['tmp_dir']
+      repository_password domain_params['repository_password']
+      not_if {  ::File.exist?("#{domain_path}/config/config.xml") == true and
+                ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0  }
+    end
   end
-
 else
 
   domain_path = "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}"
@@ -149,19 +165,35 @@ else
   end
 
   # add domain extension enterprise_scheduler
-  fmw_domain_wlst "WLST add enterprise_scheduler domain extension" do
-    version node['fmw']['version']
-    script_file "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    weblogic_home_dir node['fmw']['weblogic_home_dir']
-    java_home_dir node['fmw']['java_home_dir']
-    tmp_dir node['fmw']['tmp_dir']
-    os_user node['fmw']['os_user']
-    repository_password domain_params['repository_password']
-    not_if {  ::File.exist?("#{domain_path}/config/config.xml") == true and
-              ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0  }
+  if VERSION.start_with? '11.'
+    ruby_block "loading for chef 11 extension enterprise_scheduler" do
+      block do
+        res = Chef::Resource::Chef::Resource::FmwDomainWlst.new("WLST add enterprise_scheduler domain extension", run_context )
+        res.version             node['fmw']['version']
+        res.script_file         "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
+        res.middleware_home_dir node['fmw']['middleware_home_dir']
+        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
+        res.java_home_dir       node['fmw']['java_home_dir']
+        res.tmp_dir             node['fmw']['tmp_dir']
+        res.os_user             node['fmw']['os_user']
+        res.repository_password domain_params['repository_password']
+        res.run_action          :execute unless ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0
+      end
+    end
+  else
+    fmw_domain_wlst "WLST add enterprise_scheduler domain extension" do
+      version             node['fmw']['version']
+      script_file         "#{node['fmw']['tmp_dir']}/enterprise_scheduler.py"
+      middleware_home_dir node['fmw']['middleware_home_dir']
+      weblogic_home_dir   node['fmw']['weblogic_home_dir']
+      java_home_dir       node['fmw']['java_home_dir']
+      tmp_dir             node['fmw']['tmp_dir']
+      os_user             node['fmw']['os_user']
+      repository_password domain_params['repository_password']
+      not_if {  ::File.exist?("#{domain_path}/config/config.xml") == true and
+                ::File.readlines("#{domain_path}/config/config.xml").grep(/oracle.ess.runtime/).size > 0  }
+    end
   end
-
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"
