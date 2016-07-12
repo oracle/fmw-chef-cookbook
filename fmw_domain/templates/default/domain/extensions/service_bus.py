@@ -109,7 +109,7 @@ if WEBLOGIC_VERSION != '10.3.6':
 
     serverGroup = ["OSB-MGD-SVRS-COMBINED"]
     if OSB_CLUSTER:
-      if WEBLOGIC_VERSION == '12.2.1':
+      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1']:
         cleanJMS('UMSJMSSystemResource', 'UMSJMSServer_auto', 'UMSJMSFileStore_auto')
 
       print 'Add server group OSB-MGD-SVRS-COMBINED to cluster'
@@ -148,7 +148,7 @@ if WEBLOGIC_VERSION != '10.3.6':
         cd('/')
         delete('osb_server1', 'Server')
 
-      if WEBLOGIC_VERSION == '12.2.1':
+      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1']:
         updateDomain()
         dumpStack()
 

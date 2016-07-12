@@ -22,7 +22,7 @@ define :wls_install, :unix => true, :middleware_home_dir => nil, :java_home_dir 
         group params[:os_group]
         cwd   params[:tmp_dir]
       end
-    elsif ['12.2.1', '12.1.3', '12.1.2'].include?(params[:version])
+    elsif ['12.2.1', '12.2.1.1', '12.1.3', '12.1.2'].include?(params[:version])
       execute 'Install WLS' do
         command "#{params[:java_home_dir]}/bin/java #{java_params} -Xmx1024m -Djava.io.tmpdir=#{params[:tmp_dir]} -jar #{params[:source_file]} -silent -responseFile #{params[:tmp_dir]}/#{params[:template]} -invPtrLoc #{params[:orainst_dir]}/oraInst.loc"
         user  params[:os_user]
@@ -37,7 +37,7 @@ define :wls_install, :unix => true, :middleware_home_dir => nil, :java_home_dir 
         environment('JAVA_VENDOR' => 'Sun',
                     'JAVA_HOME'   => params[:java_home_dir])
       end
-    elsif ['12.2.1', '12.1.3', '12.1.2'].include?(params[:version])
+    elsif ['12.2.1', '12.2.1.1', '12.1.3', '12.1.2'].include?(params[:version])
       execute 'Install WLS' do
         command "#{params[:java_home_dir]}\\bin\\java.exe -Xmx1024m -Djava.io.tmpdir=#{params[:tmp_dir]} -jar #{params[:source_file]} -silent -responseFile #{params[:tmp_dir]}/#{params[:template]} -logLevel fine"
       end

@@ -86,10 +86,11 @@ suites:
       fmw:
         java_home_dir:       "/usr/java/jdk1.8.0_40"
         middleware_home_dir: "/opt/oracle/middleware_1221"
+        version:             "12.2.1.1"
       fmw_jdk:
         source_file:         "/software/jdk-8u40-linux-x64.tar.gz"
       fmw_wls:
-        source_file:         "/software/wls_generic.jar"
+        source_file:         "/software/fmw_12.2.1.1.0_wls.jar"
     excludes:
       - windows-2012r2
       - windows-8.1

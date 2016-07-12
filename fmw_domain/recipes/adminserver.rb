@@ -20,7 +20,7 @@ domain_params = domain_params.to_hash if domain_params.instance_of? Chef::Encryp
 
 
 if node['os'].include?('windows')
-
+  # chef version 11
   if VERSION.start_with? '11.'
     ruby_block "loading for chef 11 adminserver" do
       block do
@@ -52,6 +52,7 @@ if node['os'].include?('windows')
     end
   end
 else
+  # chef version 11
   if VERSION.start_with? '11.'
     ruby_block "loading for chef 11 adminserver" do
       block do

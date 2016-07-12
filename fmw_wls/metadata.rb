@@ -2,9 +2,9 @@ name             'fmw_wls'
 maintainer       'Oracle'
 maintainer_email 'fmw-chef-and-puppet_ww@oracle.com'
 license          'MIT'
-description      'Installs Oracle WebLogic 11g,12c on any Windows, Linux or Solaris host'
+description      'Installs Oracle WebLogic 11g, 12c on any Windows, Linux or Solaris host'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.1'
+version          '0.1.2'
 
 recipe            "fmw_wls",
                   "This is an empty recipe and does not do anything"

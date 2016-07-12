@@ -20,7 +20,7 @@ define :fmw_install, :unix => true, :installer_file => nil, :rsp_file => nil, :j
         group params[:os_group]
         cwd   params[:tmp_dir]
       end
-    elsif ['12.2.1', '12.1.3', '12.1.2'].include?(params[:version])
+    elsif ['12.2.1', '12.2.1.1', '12.1.3', '12.1.2'].include?(params[:version])
       execute "Install #{params[:name]}" do
         command "#{params[:java_home_dir]}/bin/java #{java_params} -Xmx1024m -Djava.io.tmpdir=#{params[:tmp_dir]} -jar #{params[:installer_file]} -waitforcompletion -silent -responseFile #{params[:rsp_file]} -invPtrLoc #{params[:orainst_dir]}/oraInst.loc -jreLoc #{params[:java_home_dir]}"
         user  params[:os_user]
@@ -34,7 +34,7 @@ define :fmw_install, :unix => true, :installer_file => nil, :rsp_file => nil, :j
         command "#{params[:installer_file]} -silent -response #{params[:rsp_file]} -waitforcompletion -jreLoc #{params[:java_home_dir]} -ignoreSysPrereqs -Djava.io.tmpdir=#{params[:tmp_dir]}"
         cwd     params[:tmp_dir]
       end
-    elsif ['12.2.1', '12.1.3', '12.1.2'].include?(params[:version])
+    elsif ['12.2.1', '12.2.1.1' '12.1.3', '12.1.2'].include?(params[:version])
       execute "Install #{params[:name]}" do
         command "#{params[:java_home_dir]}\\bin\\java.exe -Xmx1024m -Djava.io.tmpdir=#{params[:tmp_dir]} -jar #{params[:installer_file]} -waitforcompletion -silent -responseFile #{params[:rsp_file]} -jreLoc #{params[:java_home_dir]}"
         cwd     params[:tmp_dir]

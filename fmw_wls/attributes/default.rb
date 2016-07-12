@@ -1,5 +1,5 @@
 
-default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1
+default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1
 default['fmw_wls']['install_type']        = 'wls' # infra or wls
 
 if platform_family?('windows')
@@ -13,13 +13,12 @@ else
   default['fmw']['os_shell']              = '/bin/bash'
 end
 
-case platform_family
-when 'debian', 'rhel'
+if platform_family?('debian') or platform_family?('rhel')
   default['fmw']['orainst_dir']       = '/etc'
   default['fmw']['user_home_dir']     = '/home'
   default['fmw']['ora_inventory_dir'] = '/home/oracle/oraInventory'
   default['fmw']['tmp_dir']           = '/tmp'
-when 'solaris2'
+elsif platform_family?('solaris2')
   default['fmw']['orainst_dir']       = '/var/opt/oracle'
   default['fmw']['user_home_dir']     = '/export/home'
   default['fmw']['ora_inventory_dir'] = '/export/home/oracle/oraInventory'

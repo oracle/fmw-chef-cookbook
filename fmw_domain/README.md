@@ -28,7 +28,7 @@ The fmw_domain cookbook allows you to create a WebLogic (FMW) Domain with FMW ex
 
 ## Cookbook description
 
-This cookbook allows you to create a WebLogic (FMW) Domain (10.3.6, 12.1.1) or 12c (12.1.2, 12.1.3, 12.2.1 ) on any Windows, Linux or Solaris host or VM.
+This cookbook allows you to create a WebLogic (FMW) Domain (10.3.6, 12.1.1) or 12c (12.1.2, 12.1.3, 12.2.1, 12.2.1.1 ) on any Windows, Linux or Solaris host or VM.
 
 ## Setup
 

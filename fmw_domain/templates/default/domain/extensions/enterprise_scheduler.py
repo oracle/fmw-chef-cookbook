@@ -107,7 +107,7 @@ if ESS_CLUSTER:
     cd('/')
     delete('ess_server1', 'Server')
 
-  if WEBLOGIC_VERSION == '12.2.1':
+  if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1']:
     updateDomain()
     dumpStack()
 

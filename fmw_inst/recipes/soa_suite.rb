@@ -10,7 +10,7 @@ include_recipe 'fmw_wls::install'
 
 fail 'fmw_inst attributes cannot be empty' unless node.attribute?('fmw_inst')
 
-if ['12.2.1', '12.1.3'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.1.3'].include?(node['fmw']['version'])
   fmw_template = 'fmw_12c.rsp'
   fmw_oracle_home = node['fmw']['middleware_home_dir'] + '/soa/bin'
   option_array = []
@@ -32,6 +32,8 @@ if ['12.2.1', '12.1.3'].include?(node['fmw']['version'])
     fmw_installer_file = node['fmw']['tmp_dir'] + '/soa_suite/fmw_12.1.3.0.0_soa.jar'
   elsif node['fmw']['version'] == '12.2.1'
     fmw_installer_file = node['fmw']['tmp_dir'] + '/soa_suite/fmw_12.2.1.0.0_soa.jar'
+  elsif node['fmw']['version'] == '12.2.1.1'
+    fmw_installer_file = node['fmw']['tmp_dir'] + '/soa_suite/fmw_12.2.1.1.0_soa.jar'
   end
 
 elsif ['10.3.6'].include?(node['fmw']['version'])
@@ -65,8 +67,9 @@ template node['fmw']['tmp_dir'] + '/soa_' + fmw_template do
             option_array: option_array)
 end
 
+# chef version 11
 if VERSION.start_with? '11.'
-  if ['10.3.6', '12.1.3', '12.2.1'].include?(node['fmw']['version'])
+  if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
     ruby_block "loading for chef 11 install soa_suite extract" do
       block do
         if node['os'].include?('windows')
@@ -107,7 +110,7 @@ if VERSION.start_with? '11.'
     end
   end
 else
-  if ['10.3.6', '12.1.3', '12.2.1'].include?(node['fmw']['version'])
+  if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
     fmw_inst_fmw_extract 'soa_suite' do
       action              :extract
       source_file         node['fmw_inst']['soa_suite_source_file']

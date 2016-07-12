@@ -18,7 +18,7 @@ if !('typical'.casecmp(node['fmw']['install_type'].to_s)==0)
    node.override['fmw']['install_type']='typical'
 end
 
-if ['12.2.1'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
   fmw_template = 'fmw_12c.rsp'
   fmw_oracle_home = node['fmw']['middleware_home_dir'] + '/wcportal'
   option_array = []
@@ -26,6 +26,8 @@ if ['12.2.1'].include?(node['fmw']['version'])
 
   if node['fmw']['version'] == '12.2.1'
     fmw_installer_file = node['fmw']['tmp_dir'] + '/webcenter/fmw_12.2.1.0.0_wcportal_generic.jar'
+  elsif node['fmw']['version'] == '12.2.1.1'
+    fmw_installer_file = node['fmw']['tmp_dir'] + '/webcenter/fmw_12.2.1.1.0_wcportal.jar'
   end
 
 elsif ['10.3.6'].include?(node['fmw']['version'])
@@ -59,6 +61,7 @@ template node['fmw']['tmp_dir'] + '/wc_' + fmw_template do
             option_array: option_array)
 end
 
+# chef version 11
 if VERSION.start_with? '11.'
   ruby_block "loading for chef 11 install webcenter extract" do
     block do
@@ -118,7 +121,7 @@ if platform_family?('rhel')
     ignore_failure true
     action :install
   end
-  if node.platform_version.to_f < 7.0
+  if node['platform_version'].to_f < 7.0
     yum_package ["libstdc++","glibc", "libgcc", "compat-libstdc++-33"] do
       arch 'i686'
       ignore_failure true
@@ -127,6 +130,7 @@ if platform_family?('rhel')
   end
 end
 
+# chef version 11
 if VERSION.start_with? '11.'
   ruby_block "loading for chef 11 install webcenter" do
     block do
