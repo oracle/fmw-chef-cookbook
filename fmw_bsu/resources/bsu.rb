@@ -19,6 +19,6 @@ attribute :middleware_home_dir, kind_of: String, required: true
 # WebLogic Operating system user
 attribute :os_user, kind_of: String, required: true
 
-state_attrs :patch_id, :oracle_home_dir, :os_user
+state_attrs :patch_id, :middleware_home_dir, :os_user
 
 attr_accessor :exists

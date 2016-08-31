@@ -17,6 +17,6 @@ attribute :patch_id, kind_of: String, required: true
 # Middleware home folder
 attribute :middleware_home_dir, kind_of: String, required: true
 
-state_attrs :patch_id, :oracle_home_dir
+state_attrs :patch_id, :middleware_home_dir
 
 attr_accessor :exists
