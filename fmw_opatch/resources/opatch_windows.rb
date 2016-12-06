@@ -21,6 +21,6 @@ attribute :java_home_dir, kind_of: String, required: true
 # tmp folder
 attribute :tmp_dir, kind_of: String, required: true
 
-state_attrs :patch_id, :oracle_home_dir, :java_home_dir, :orainst_dir, :os_user, :os_group, :tmp_dir
+state_attrs :patch_id, :oracle_home_dir, :java_home_dir, :tmp_dir
 
 attr_accessor :exists

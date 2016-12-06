@@ -25,6 +25,6 @@ attribute :rsp_file, kind_of: String, required: true
 # tmp folder
 attribute :tmp_dir, kind_of: String, required: true
 
-state_attrs :java_home_dir, :middleware_home_dir, :version, :tmp_dir, :rsp_file
+state_attrs :java_home_dir, :oracle_home_dir, :version, :tmp_dir, :rsp_file
 
 attr_accessor :exists
