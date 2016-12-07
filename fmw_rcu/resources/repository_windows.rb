@@ -37,6 +37,6 @@ attribute :rcu_component_password, kind_of: String, required: true
 # tmp folder
 attribute :tmp_dir, kind_of: String, required: true
 
-state_attrs :java_home_dir, :oracle_home_dir, :jdbc_connect_url, :db_connect_url, :db_connect_user, :rcu_prefix, :rcu_components, :tmp_dir
+state_attrs :java_home_dir, :middleware_home_dir, :jdbc_connect_url, :db_connect_url, :db_connect_user, :rcu_prefix, :rcu_components, :tmp_dir
 
 attr_accessor :exists
