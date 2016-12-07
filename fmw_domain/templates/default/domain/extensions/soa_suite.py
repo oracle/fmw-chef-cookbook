@@ -156,7 +156,7 @@ if WEBLOGIC_VERSION != '10.3.6':
 
     serverGroup = ["SOA-MGD-SVRS"]
     if SOA_CLUSTER:
-      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1']:
+      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1', '12.2.1.2']:
         cleanJMS('UMSJMSSystemResource', 'UMSJMSServer_auto', 'UMSJMSFileStore_auto')
 
       print 'Add server group SOA-MGD-SVRS to cluster'
@@ -195,7 +195,7 @@ if WEBLOGIC_VERSION != '10.3.6':
         cd('/')
         delete('soa_server1', 'Server')
 
-      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1']:
+      if WEBLOGIC_VERSION in ['12.2.1', '12.2.1.1', '12.2.1.2']:
         updateDomain()
         dumpStack()
 

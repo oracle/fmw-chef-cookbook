@@ -13,7 +13,7 @@ fail 'fmw_opatch attributes cannot be empty' unless node.attribute?('fmw_opatch'
 fail 'source_file parameter cannot be empty' unless node['fmw_opatch'].attribute?('service_bus_source_file')
 fail 'patch_id parameter cannot be empty' unless node['fmw_opatch'].attribute?('service_bus_patch_id')
 
-if ['12.2.1', '12.2.1.1', '12.1.3'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3'].include?(node['fmw']['version'])
   fmw_oracle_home = node['fmw']['middleware_home_dir']
 elsif ['10.3.6'].include?(node['fmw']['version'])
   if node['os'].include?('windows')

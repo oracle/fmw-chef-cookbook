@@ -1,5 +1,5 @@
 
-default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1
+default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1|12.2.1.2
 default['fmw_wls']['install_type']        = 'wls' # infra or wls
 
 if platform_family?('windows')

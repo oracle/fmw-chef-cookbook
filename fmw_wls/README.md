@@ -21,7 +21,7 @@ The fmw_wls cookbook allows you to install Oracle WebLogic on a Windows, Linux o
 
 ## Cookbook description
 
-This cookbook allows you to install any WebLogic 11g (10.3.6, 12.1.1) or 12c (12.1.2, 12.1.3, 12.2.1, 12.2.1.1 ) version on any Windows, Linux or Solaris host or VM.
+This cookbook allows you to install any WebLogic 11g (10.3.6, 12.1.1) or 12c (12.1.2, 12.1.3, 12.2.1, 12.2.1.1, 12.2.1.2 ) version on any Windows, Linux or Solaris host or VM.
 
 ## Setup
 
@@ -33,7 +33,7 @@ Add this cookbook to your chef cookbook folder, add fmw_wls recipes to the run l
 
 Cookbook defaults
 
-    default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1
+    default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1|12.2.1.2
     default['fmw_wls']['install_type']        = 'wls' # infra or wls
 
     if platform_family?('windows')

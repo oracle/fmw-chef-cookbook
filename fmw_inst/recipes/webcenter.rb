@@ -18,7 +18,7 @@ if !('typical'.casecmp(node['fmw']['install_type'].to_s)==0)
    node.override['fmw']['install_type']='typical'
 end
 
-if ['12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
   fmw_template = 'fmw_12c.rsp'
   fmw_oracle_home = node['fmw']['middleware_home_dir'] + '/wcportal'
   option_array = []
@@ -28,6 +28,8 @@ if ['12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
     fmw_installer_file = node['fmw']['tmp_dir'] + '/webcenter/fmw_12.2.1.0.0_wcportal_generic.jar'
   elsif node['fmw']['version'] == '12.2.1.1'
     fmw_installer_file = node['fmw']['tmp_dir'] + '/webcenter/fmw_12.2.1.1.0_wcportal.jar'
+  elsif node['fmw']['version'] == '12.2.1.2'
+    fmw_installer_file = node['fmw']['tmp_dir'] + '/webcenter/fmw_12.2.1.2.0_wcportal.jar'
   end
 
 elsif ['10.3.6'].include?(node['fmw']['version'])

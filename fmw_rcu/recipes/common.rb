@@ -20,12 +20,12 @@ fail 'did not find the data_bag_item' if rcu_params.length == 0
 
 include_recipe 'fmw_wls::install'
 
-if ['12.2.1', '12.2.1.1', '12.1.3'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3'].include?(node['fmw']['version'])
   fail 'oracle_home_dir parameter cannot be empty' unless node['fmw_rcu'].attribute?('oracle_home_dir')
   oracle_home_dir   = node['fmw_rcu']['oracle_home_dir']
 end
 
-if ['12.2.1', '12.2.1.1'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
 
   component_array = ['MDS',
                      'IAU',

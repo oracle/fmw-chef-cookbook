@@ -52,7 +52,7 @@ if node['fmw_domain'].attribute?('soa_suite_install_type')
   bpm_enabled = true if node['fmw_domain']['soa_suite_install_type'] == 'BPM'
 end
 
-if ['12.2.1', '12.2.1.1', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
   if node['fmw']['version'] == '12.1.2'
     return
   elsif node['fmw']['version'] == '12.1.3'

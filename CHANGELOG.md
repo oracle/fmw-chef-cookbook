@@ -2,6 +2,7 @@
 
 ## chef-samples v0.1.3 (6 Dec 2016)
 
+- support for WebLogic/FMW 12.2.1.2
 - state_attr fixes in some resources
 - fmw_inst fix in version 
 

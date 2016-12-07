@@ -21,7 +21,7 @@ fail 'did not find the data_bag_item' if domain_params.length == 0
 
 restricted = false
 
-if ['12.2.1', '12.2.1.1', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
   if node['fmw']['version'] == '12.1.2'
     wls_em_template      = "#{node['fmw']['middleware_home_dir']}/em/common/templates/wls/oracle.em_wls_template_12.1.2.jar"
     wls_webtier_template = "#{node['fmw']['middleware_home_dir']}/ohs/common/templates/wls/ohs_managed_template_12.1.2.jar"
