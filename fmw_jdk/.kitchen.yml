@@ -1,6 +1,7 @@
 ---
 driver:
   name: vagrant
+  provider: vmware_fusion
 
 provisioner:
   name: chef_solo
@@ -12,7 +13,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-7.0
     driver_config:
       box: OEL-7.2-x86_64
@@ -20,7 +21,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-6.6
     driver_config:
       box: OEL6_6-x86_64
@@ -28,7 +29,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-5.8
     driver_config:
       box: OEL-5.8
@@ -36,7 +37,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-10
     driver_config:
       box: solaris10-x86_64
@@ -44,7 +45,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-11.2
     driver_config:
       box: solaris11_2-x86_64
@@ -52,7 +53,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-2012r2
     transport:
       name: winrm
@@ -62,7 +63,7 @@ platforms:
         memory: 3072
         cpus: 2
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-8.1
     transport:
       name: winrm
@@ -72,7 +73,7 @@ platforms:
         memory: 3072
         cpus: 2
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
 
 suites:
   - name: exe
@@ -80,9 +81,9 @@ suites:
       - recipe[fmw_jdk::install]
     attributes:
       fmw:
-        java_home_dir:    "C:/java/jdk1.8.0_40"
+        java_home_dir:    "C:/java/jdk1.8.0_111"
       fmw_jdk:
-        source_file:      "C:/software/jdk-8u40-windows-x64.exe"
+        source_file:      "/Users/edwinbiemond/software/jdk-8u111-windows-x64.exe"
     excludes:
       - debian-7.2.0
       - oel-7.0
@@ -96,9 +97,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.8.0_40"
+        java_home_dir:    "/usr/java/jdk1.8.0_111"
       fmw_jdk:
-        source_file:      "/software/jdk-8u40-linux-x64.rpm"
+        source_file:      "/software/jdk-8u111-linux-x64.rpm"
     excludes:
       - debian-7.2.0
       - windows-2012r2
@@ -111,9 +112,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.7.0_75"
+        java_home_dir:    "/usr/java/jdk1.7.0_79"
       fmw_jdk:
-        source_file:      "/software/jdk-7u75-linux-x64.rpm"
+        source_file:      "/software/jdk-7u79-linux-x64.rpm"
     excludes:
       - debian-7.2.0
       - windows-2012r2
@@ -126,9 +127,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.8.0_40"
+        java_home_dir:    "/usr/java/jdk1.8.0_111"
       fmw_jdk:
-        source_file:      "/software/jdk-8u40-linux-x64.tar.gz"
+        source_file:      "/software/jdk-8u111-linux-x64.tar.gz"
     excludes:
       - windows-2012r2
       - windows-8.1
@@ -140,9 +141,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.7.0_75"
+        java_home_dir:    "/usr/java/jdk1.7.0_79"
       fmw_jdk:
-        source_file:      "/software/jdk-7u75-linux-x64.tar.gz"
+        source_file:      "/software/jdk-7u79-linux-x64.tar.gz"
     excludes:
       - windows-2012r2
       - windows-8.1

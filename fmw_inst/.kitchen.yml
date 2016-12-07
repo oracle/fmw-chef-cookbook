@@ -1,15 +1,16 @@
 ---
 driver:
   name: vagrant
-  http_proxy: http://www-proxy.us.oracle.com:80
-  https_proxy: http://www-proxy.us.oracle.com:80
-  provision_command: "env http_proxy=http://www-proxy.us.oracle.com:80 bash -c 'curl -L http://www.getchef.com/chef/install.sh | bash'"
-  vagrantfiles:
-    - Vagrantfile.rb
+  provider: vmware_fusion
+  # http_proxy: http://www-proxy.us.oracle.com:80
+  # https_proxy: http://www-proxy.us.oracle.com:80
+  # provision_command: "env http_proxy=http://www-proxy.us.oracle.com:80 bash -c 'curl -L http://www.getchef.com/chef/install.sh | bash'"
+  # vagrantfiles:
+  #   - Vagrantfile.rb
 
 provisioner:
   name: chef_solo
-  chef_omnibus_url: http://www.getchef.com/chef/install.sh
+  # chef_omnibus_url: http://www.getchef.com/chef/install.sh
 
 platforms:
   - name: debian-7.2.0
@@ -20,18 +21,17 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
-  - name: oel-7.1
+        - ["/Users/edwinbiemond/software", "/software"]
+  - name: oel-7.0
     driver_config:
-      box: OEL-7.1-x86_64
-      box_url: file:///software/OEL7_1-x86_64.box
+      box: OEL-7.2-x86_64
       ssh_timeout: 45
       ssh_retries: 10
       customize:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-6.6
     driver_config:
       box: OEL-6.6
@@ -41,7 +41,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-5.8
     driver_config:
       box: OEL-5.8
@@ -51,7 +51,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-2012r2
     transport:
       name: winrm
@@ -63,7 +63,7 @@ platforms:
         memory: 4096
         cpus: 2
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-8.1
     transport:
       name: winrm
@@ -75,7 +75,7 @@ platforms:
         memory: 4096
         cpus: 2
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-10
     driver_config:
       box: solaris10-x86_64
@@ -85,7 +85,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-11.2
     driver_config:
       box: solaris11_2-x86_64
@@ -95,9 +95,37 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["<%= ENV['ARTIFACT_DIRECTORY'] %>", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
 
 suites:
+  - name: wls1221
+    run_list:
+      - recipe[fmw_jdk::install]
+      - recipe[fmw_jdk::rng_service]
+      - recipe[fmw_wls::setup]
+      - recipe[fmw_wls::install]
+      - recipe[fmw_inst::soa_suite]
+      - recipe[fmw_inst::service_bus]
+    attributes:
+      fmw:
+        java_home_dir:           "/usr/java/jdk1.8.0_111"
+        middleware_home_dir:     "/opt/oracle/middleware_1221"
+        version:                 "12.2.1.2"
+      fmw_jdk:
+        source_file:             "/software/jdk-8u111-linux-x64.tar.gz"
+      fmw_wls:
+        source_file:             "/software/fmw_12.2.1.2.0_infrastructure.jar"
+        install_type:            "infra"
+      fmw_inst:
+        soa_suite_source_file:   "/software/fmw_12.2.1.2.0_soa_Disk1_1of1.zip"
+        soa_suite_install_type:  "BPM"
+        service_bus_source_file: "/software/fmw_12.2.1.2.0_osb_Disk1_1of1.zip"
+    excludes:
+      - windows-2012r2
+      - windows-8.1
+      - solaris-11.2
+      - solaris-10
+
   - name: wls1213
     run_list:
       - recipe[fmw_jdk::install]

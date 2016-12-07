@@ -1,6 +1,7 @@
 ---
 driver:
   name: vagrant
+  provider: vmware_fusion
 
 provisioner:
   name: chef_solo
@@ -12,7 +13,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-7.0
     driver_config:
       box: OEL-7.2-x86_64
@@ -20,7 +21,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-6.6
     driver_config:
       box: OEL-6.6
@@ -28,7 +29,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-5.8
     driver_config:
       box: OEL-5.8
@@ -36,7 +37,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-2012r2
     transport:
       name: winrm
@@ -46,7 +47,7 @@ platforms:
         memory: 4096
         cpus: 2
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: windows-8.1
     transport:
       name: winrm
@@ -56,7 +57,7 @@ platforms:
         memory: 4096
         cpus: 2
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-10
     driver_config:
       box: solaris10-x86_64
@@ -64,7 +65,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
   - name: solaris-11.2
     driver_config:
       box: solaris11_2-x86_64
@@ -72,7 +73,7 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["C:/software", "/software"]
+        - ["/Users/edwinbiemond/software", "/software"]
 
 
 suites:
@@ -84,13 +85,13 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/java/jdk1.8.0_40"
+        java_home_dir:       "/usr/java/jdk1.8.0_111"
         middleware_home_dir: "/opt/oracle/middleware_1221"
-        version:             "12.2.1.1"
+        version:             "12.2.1.2"
       fmw_jdk:
-        source_file:         "/software/jdk-8u40-linux-x64.tar.gz"
+        source_file:         "/software/jdk-8u111-linux-x64.tar.gz"
       fmw_wls:
-        source_file:         "/software/fmw_12.2.1.1.0_wls.jar"
+        source_file:         "/software/fmw_12.2.1.2.0_wls.jar"
     excludes:
       - windows-2012r2
       - windows-8.1

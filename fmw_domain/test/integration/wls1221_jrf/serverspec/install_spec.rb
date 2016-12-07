@@ -61,7 +61,7 @@ describe 'fmw_domain::domain' do
   describe file('/tmp/wls_12c.rsp') do
     it { should be_file }
     it { should contain 'ORACLE_HOME=/opt/oracle/middleware_1221' }
-    it { should contain 'INSTALL_TYPE=WebLogic Server' }
+    it { should contain 'INSTALL_TYPE=Fusion Middleware Infrastructure' }
   end
 
   describe file('/home/oracle/oraInventory') do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'fmw_domain::domain' do
+describe 'fmw_inst::install' do
 
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
@@ -61,7 +61,7 @@ describe 'fmw_domain::domain' do
   describe file('/tmp/wls_12c.rsp') do
     it { should be_file }
     it { should contain 'ORACLE_HOME=/opt/oracle/middleware_1221' }
-    it { should contain 'INSTALL_TYPE=WebLogic Server' }
+    it { should contain 'INSTALL_TYPE=Fusion Middleware Infrastructure' }
   end
 
   describe file('/home/oracle/oraInventory') do
@@ -83,25 +83,23 @@ describe 'fmw_domain::domain' do
     it { should be_executable }
   end
 
-  describe file('/opt/oracle/middleware_1221/user_projects/domains/base') do
+  describe file('/opt/oracle/middleware_1221/oracle_common/bin/rcu') do
+    it { should be_file }
+    it { should be_owned_by 'oracle' }
+    it { should be_grouped_into 'oinstall' }
+    it { should be_executable }
+  end
+
+  describe file('/opt/oracle/middleware_1221/soa/bin') do
     it { should be_directory }
     it { should be_owned_by 'oracle' }
     it { should be_grouped_into 'oinstall' }
   end
 
-  unless ['redhat'].include?(os[:family]) and os[:release] < '6.0'
-    describe service('nodemanager_base') do
-      it { should be_enabled }
-      it { should be_running }
-    end
-  end
-
-  describe port(5556) do
-    it { should be_listening }
-  end
-
-  describe port(7001) do
-    it { should be_listening }
+  describe file('/opt/oracle/middleware_1221/osb/bin') do
+    it { should be_directory }
+    it { should be_owned_by 'oracle' }
+    it { should be_grouped_into 'oinstall' }
   end
 
 end
