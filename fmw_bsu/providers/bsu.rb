@@ -64,7 +64,7 @@ action :remove do
     converge_by("Rollback resource #{ @new_resource }") do
       result = false
       result = false
-      shell_out!("su - #{@new_resource.os_user} -c 'cd #{@new_resource.middleware_home_dir}/utils/bsu;#{@new_resource.middleware_home_dir}/utils/bsu/bsu.cmd -remove -patchlist=#{@new_resource.patch_id} -prod_dir=#{@new_resource.middleware_home_dir}/wlserver_10.3 -verbose'", :timeout => 1200).stdout.each_line do |line|
+      shell_out!("su - #{@new_resource.os_user} -c 'cd #{@new_resource.middleware_home_dir}/utils/bsu;#{@new_resource.middleware_home_dir}/utils/bsu/bsu.sh -remove -patchlist=#{@new_resource.patch_id} -prod_dir=#{@new_resource.middleware_home_dir}/wlserver_10.3 -verbose'", :timeout => 1200).stdout.each_line do |line|
         Chef::Log.info(line)
         unless line.nil?
           if line.include? 'Result: Success'
