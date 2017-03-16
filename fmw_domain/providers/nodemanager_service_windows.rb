@@ -23,6 +23,7 @@ def load_current_resource
   @current_resource.version(@new_resource.version)
   @current_resource.bin_dir(@new_resource.bin_dir)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
+  @current_resource.prod_name(@new_resource.prod_name)
   @current_resource
 end
 
@@ -37,9 +38,19 @@ action :configure do
     service_name = nil
 
     if new_resource.version == '10.3.6'
-      service_check_name = 'Oracle WebLogic NodeManager'
+      if new_resource.prod_name.nil? or new_resource.prod_name == ''
+        local_prod_name = 'Oracle Weblogic'
+      else
+        local_prod_name = new_resource.prod_name
+      end
+      service_check_name = '#{local_prod_name} NodeManager'
     else
-      service_check_name = "Oracle Weblogic #{new_resource.domain_name} NodeManager"
+      if new_resource.prod_name.nil? or new_resource.prod_name == ''
+        local_prod_name = 'OracleWeblogic'
+      else
+        local_prod_name = new_resource.prod_name
+      end
+      service_check_name = "#{local_prod_name} #{new_resource.domain_name} NodeManager"
     end
 
     # check the existence and the service name
@@ -63,7 +74,8 @@ action :configure do
           command 'installNodeMgrSvc.cmd'
           cwd new_resource.bin_dir
           environment ({ 'CLASSPATH' => "#{new_resource.middleware_home_dir}\\wlserver_10.3\\server\\lib\\weblogic.jar",
-                         'JAVA_HOME' => new_resource.java_home_dir })
+                         'JAVA_HOME' => new_resource.java_home_dir,
+                         'PROD_NAME'    => local_prod_name })
         end
       else
         execute 'add NodeManager service 12c' do
@@ -71,7 +83,8 @@ action :configure do
           cwd new_resource.bin_dir
           environment ({ 'JAVA_OPTIONS' => "-Dohs.product.home=#{new_resource.middleware_home_dir} -Dweblogic.RootDirectory=#{new_resource.domain_dir}",
                          'JAVA_HOME'    => new_resource.java_home_dir,
-                         'MW_HOME'      => new_resource.middleware_home_dir })
+                         'MW_HOME'      => new_resource.middleware_home_dir,
+                         'PROD_NAME'    => local_prod_name })
         end
       end
       # do it in a block so it executed after the adding the nodemanager service
