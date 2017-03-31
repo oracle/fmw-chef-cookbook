@@ -150,6 +150,7 @@ elsif node['os'].include?('windows')
         res.bin_dir             bin_dir
         res.java_home_dir       node['fmw']['java_home_dir']
         res.prod_name           node['fmw']['prod_name']
+        res.service_description node['fmw_domain']['nodemanager_service_description']
         res.run_action          :configure
       end
     end
@@ -162,6 +163,7 @@ elsif node['os'].include?('windows')
       bin_dir             bin_dir
       java_home_dir       node['fmw']['java_home_dir']
       prod_name           node['fmw']['prod_name']
+      service_description node['fmw_domain']['nodemanager_service_description']
     end
   end
 

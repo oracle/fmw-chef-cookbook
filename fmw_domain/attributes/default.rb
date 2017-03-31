@@ -1,6 +1,7 @@
 include_attribute 'fmw_wls'
 
 default['fmw_domain']['nodemanager_port']               = 5556
+default['fmw_domain']['nodemanager_service_description'] = nil
 
 if platform_family?('windows')
   default['fmw_domain']['domains_dir']    = 'C:/oracle/middleware/user_projects/domains'
