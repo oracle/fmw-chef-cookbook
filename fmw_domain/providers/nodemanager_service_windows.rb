@@ -47,7 +47,7 @@ action :configure do
       service_check_name = '#{local_prod_name} NodeManager'
     else
       if new_resource.prod_name.nil? or new_resource.prod_name == ''
-        local_prod_name = 'Oracle Weblogic'
+        local_prod_name = 'Oracle Weblogic #{new_resource.domain_name}'
       else
         local_prod_name = new_resource.prod_name
       end
@@ -70,6 +70,7 @@ action :configure do
     end
 
     if exists == false
+      Chef::Log.info("PROD_NAME: " + local_prod_name)
       if new_resource.version == '10.3.6'
         execute 'add NodeManager service 11g' do
           command 'installNodeMgrSvc.cmd'
@@ -80,6 +81,11 @@ action :configure do
                          'SERVICE_DESCRIPTION' => new_resource.service_description })
         end
       else
+        cmd_file_name = ::File.join(new_resource.bin_dir, 'installNodeMgrSvc.cmd')
+        file_content = ::File.read(cmd_file_name)
+        file_content = file_content.gsub(/^set PROD_NAME=.*$/, "")
+        ::File.open(cmd_file_name, "w") {|file| file.puts file_content }
+
         execute 'add NodeManager service 12c' do
           command 'installNodeMgrSvc.cmd'
           cwd new_resource.bin_dir
