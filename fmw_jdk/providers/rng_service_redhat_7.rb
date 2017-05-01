@@ -17,7 +17,7 @@ end
 
 def load_current_resource
   Chef::Log.info('rng_service provider, rng_service_redhat_7 provider load current resource')
-  @current_resource ||= Chef::Resource::FmwJdkRngServiceRedhat7.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve(:fmw_jdk_rng_service_redhat_7).new(new_resource.name)
   @current_resource
 end
 

@@ -19,12 +19,12 @@ attribute :java_home_dir, kind_of: String, required: true, name_attribute: true
 # Solaris JDK source file, it should be a file with .tar.gz as extension.
 attribute :source_file,   kind_of: String, required: true, callbacks:
           {
-            'source should have a valid JDK extension' => ->(extensions) { Chef::Resource::FmwJdkJdkSolaris.validate_source_file(extensions) }
+            'source should have a valid JDK extension' => ->(extensions) { Chef::ResourceResolver.resolve(:fmw_jdk_jdk_solaris).validate_source_file(extensions) }
           }
 # Solaris JDK source x64 file, it should be a file with .tar.gz as extension.
 attribute :source_x64_file,   kind_of: String, required: false, callbacks:
           {
-            'source should have a valid JDK extension' => ->(extensions) { Chef::Resource::FmwJdkJdkSolaris.validate_source_file(extensions) }
+            'source should have a valid JDK extension' => ->(extensions) { Chef::ResourceResolver.resolve(:fmw_jdk_jdk_solaris).validate_source_file(extensions) }
           }
 
 state_attrs :java_home_dir

@@ -25,7 +25,7 @@ end
 
 def load_current_resource
   Chef::Log.info('jdk provider, jdk_linux provider load current resource')
-  @current_resource ||= Chef::Resource::FmwJdkJdkLinux.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve(:fmw_jdk_jdk_linux).new(new_resource.name)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
   @current_resource.source_file(@new_resource.source_file)
 

@@ -1,10 +1,15 @@
 # Change Log
 
+## chef-samples v0.1.4 (1 May 2017)
+- Support chef 13, use v0.1.3 release for chef 11
+- Drop support for chef 11
+- allow to name the windows nodemanager
+
 ## chef-samples v0.1.3 (6 Dec 2016)
 
 - support for WebLogic/FMW 12.2.1.2
 - state_attr fixes in some resources
-- fmw_inst fix in version 
+- fmw_inst fix in version
 
 ## chef-samples v0.1.2 (12 Jul 2016)
 

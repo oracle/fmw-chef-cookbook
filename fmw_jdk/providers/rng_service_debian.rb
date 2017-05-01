@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('rng_service provider, rng_service_debian provider load current resource')
-  @current_resource ||= Chef::Resource::FmwJdkRngServiceDebian.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve(:fmw_jdk_rng_service_debian).new(new_resource.name)
   @current_resource
 end
 

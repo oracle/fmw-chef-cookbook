@@ -17,7 +17,7 @@ attribute :java_home_dir, kind_of: String, required: true, name_attribute: true
 # Windows JDK source executable, it should be a file with .exe as extension.
 attribute :source_file,   kind_of: String, required: true, callbacks:
             {
-              'source should have a valid JDK extension' => ->(extensions) { Chef::Resource::FmwJdkJdkWindows.validate_source_file(extensions) }
+              'source should have a valid JDK extension' => ->(extensions) { Chef::ResourceResolver.resolve(:fmw_jdk_jdk_windows).validate_source_file(extensions) }
             }
 
 state_attrs :java_home_dir

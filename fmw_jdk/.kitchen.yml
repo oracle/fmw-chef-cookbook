@@ -1,10 +1,11 @@
 ---
 driver:
   name: vagrant
-  provider: vmware_fusion
+  # provider: vmware_fusion
 
 provisioner:
   name: chef_solo
+  # require_chef_omnibus: 12
 
 platforms:
   - name: debian-7.2.0
@@ -13,23 +14,23 @@ platforms:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: oel-7.0
     driver_config:
-      box: OEL-7.2-x86_64
+      box: OEL7_2-x86_64
       customize:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: oel-6.6
     driver_config:
-      box: OEL6_6-x86_64
+      box: OEL6_6-x86_64_plain
       customize:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: oel-5.8
     driver_config:
       box: OEL-5.8
@@ -63,7 +64,7 @@ platforms:
         memory: 3072
         cpus: 2
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: windows-8.1
     transport:
       name: winrm
@@ -73,7 +74,7 @@ platforms:
         memory: 3072
         cpus: 2
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
 
 suites:
   - name: exe
@@ -81,9 +82,9 @@ suites:
       - recipe[fmw_jdk::install]
     attributes:
       fmw:
-        java_home_dir:    "C:/java/jdk1.8.0_111"
+        java_home_dir:    "C:/java/jdk1.8.0_131"
       fmw_jdk:
-        source_file:      "/Users/edwinbiemond/software/jdk-8u111-windows-x64.exe"
+        source_file:      "C:/software/jdk-8u131-windows-x64.exe"
     excludes:
       - debian-7.2.0
       - oel-7.0
@@ -97,9 +98,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.8.0_111"
+        java_home_dir:    "/usr/java/jdk1.8.0_131"
       fmw_jdk:
-        source_file:      "/software/jdk-8u111-linux-x64.rpm"
+        source_file:      "/software/jdk-8u131-linux-x64.rpm"
     excludes:
       - debian-7.2.0
       - windows-2012r2
@@ -127,9 +128,9 @@ suites:
       - recipe[fmw_jdk::rng_service]
     attributes:
       fmw:
-        java_home_dir:    "/usr/java/jdk1.8.0_111"
+        java_home_dir:    "/usr/java/jdk1.8.0_131"
       fmw_jdk:
-        source_file:      "/software/jdk-8u111-linux-x64.tar.gz"
+        source_file:      "/software/jdk-8u131-linux-x64.tar.gz"
     excludes:
       - windows-2012r2
       - windows-8.1
@@ -154,9 +155,9 @@ suites:
       - recipe[fmw_jdk::install]
     attributes:
       fmw:
-        java_home_dir:    "/usr/jdk/instances/jdk1.8.0_40"
+        java_home_dir:    "/usr/jdk/instances/jdk1.8.0_131"
       fmw_jdk:
-        source_file:      "/software/jdk-8u40-solaris-x64.tar.gz"
+        source_file:      "/software/jdk-8u131-solaris-x64.tar.gz"
     excludes:
       - windows-2012r2
       - windows-8.1

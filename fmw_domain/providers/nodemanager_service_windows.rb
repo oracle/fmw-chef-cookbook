@@ -77,7 +77,7 @@ action :configure do
           cwd new_resource.bin_dir
           environment ({ 'CLASSPATH' => "#{new_resource.middleware_home_dir}\\wlserver_10.3\\server\\lib\\weblogic.jar",
                          'JAVA_HOME' => new_resource.java_home_dir,
-                         'PROD_NAME'    => local_prod_name,
+                         'PROD_NAME' => local_prod_name,
                          'SERVICE_DESCRIPTION' => new_resource.service_description })
         end
       else

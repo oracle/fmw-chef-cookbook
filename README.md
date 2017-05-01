@@ -1,11 +1,11 @@
 # Oracle WebLogic CHEF cookbooks
 
 ## Chef support
-- Version 11, 12
+- Version 12, 13 ( for use v0.1.3 release for chef 11)
 - Chef solo, client/server
 - Databags (encrypted)
 
-## WebLogic Chef 11 & 12 Support for
+## WebLogic Chef 12 & 13 Support for
 - The installation & configuration of the JDK, WebLogic and Fusion Middleware (FMW) software
 - WebLogic & FMW patching
 - WebLogic version 10.3.6, 11.1, 12.1 & 12.2
@@ -15,7 +15,7 @@
 	- Extend the domain with ADF/JRF, SOA Suite, Service Bus, Webtier etc
 
 ## Restrictions
-- Will not download of all the required JDK, WebLogic or FMW software from OTN. They should be available on the host (local or from a share) 
+- Will not download of all the required JDK, WebLogic or FMW software from OTN. They should be available on the host (local or from a share)
 - Does not download patches from https://support.oracle.com
 - Does not give you the right to use all the FMW software
 - Check your license or make sure you comply with the OTN developer license agreement
