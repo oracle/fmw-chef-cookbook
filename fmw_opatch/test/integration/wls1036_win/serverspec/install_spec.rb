@@ -5,11 +5,11 @@ describe 'fmw_inst::install' do
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
 
-  describe file('c:\\java\\jdk1.7.0_75') do
+  describe file('c:\\java\\jdk1.7.0_79') do
     it { should be_directory }
   end
 
-  describe file('c:\\java\\jdk1.7.0_75\\bin\\java.exe') do
+  describe file('c:\\java\\jdk1.7.0_79\\bin\\java.exe') do
     it { should be_file }
   end
 

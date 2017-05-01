@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('wlst provider, wlst provider load current resource')
-  @current_resource ||= Chef::Resource::FmwDomainWlst.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_wlst').new(new_resource.name)
   @current_resource.version(@new_resource.version)
   @current_resource.script_file(@new_resource.script_file)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)

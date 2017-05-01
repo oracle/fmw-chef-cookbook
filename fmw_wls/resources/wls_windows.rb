@@ -21,7 +21,7 @@ attribute :java_home_dir, kind_of: String, required: true
 # Linux WebLogic source file, it should be a file with .jar as extension.
 attribute :source_file,   kind_of: String, required: true, callbacks:
           {
-            'source should have a valid WebLogic extension' => ->(extensions) { Chef::Resource::FmwWlsWlsWindows.validate_source_file(extensions) }
+            'source should have a valid WebLogic extension' => ->(extensions) { Chef::ResourceResolver.resolve('fmw_wls_wls_windows').validate_source_file(extensions) }
           }
 # Full path of OraInventory directory
 attribute :ora_inventory_dir, kind_of: String, required: true

@@ -125,60 +125,29 @@ if node['os'].include?('windows')
   end
 
   # add domain extension soa_suite
-  if VERSION.start_with? '11.'
-    ruby_block "loading for chef 11 extension soa_suite" do
-      block do
-        res = Chef::Resource::Chef::Resource::FmwDomainWlstWindows.new( "WLST add soa_suite domain extension", run_context )
-        res.version             node['fmw']['version']
-        res.script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
-        res.middleware_home_dir node['fmw']['middleware_home_dir']
-        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        res.java_home_dir       node['fmw']['java_home_dir']
-        res.tmp_dir             node['fmw']['tmp_dir']
-        res.repository_password domain_params['repository_password']
-        res.run_action          :execute unless ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0 
-      end
-    end
-  else
-    fmw_domain_wlst "WLST add soa_suite domain extension" do
+  fmw_domain_wlst "WLST add soa_suite domain extension" do
+    version             node['fmw']['version']
+    script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
+    middleware_home_dir node['fmw']['middleware_home_dir']
+    weblogic_home_dir   node['fmw']['weblogic_home_dir']
+    java_home_dir       node['fmw']['java_home_dir']
+    tmp_dir             node['fmw']['tmp_dir']
+    repository_password domain_params['repository_password']
+    not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
+             ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0 }
+  end
+
+  if node['fmw_domain'].attribute?('soa_suite_cluster') and node['fmw']['version'] == '10.3.6'
+    # add soa_suite JMS cluster configuration
+    fmw_domain_wlst "WLST add soa_suite JMS cluster configuration" do
       version             node['fmw']['version']
-      script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
+      script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
       middleware_home_dir node['fmw']['middleware_home_dir']
       weblogic_home_dir   node['fmw']['weblogic_home_dir']
       java_home_dir       node['fmw']['java_home_dir']
       tmp_dir             node['fmw']['tmp_dir']
-      repository_password domain_params['repository_password']
       not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
-               ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0 }
-    end
-  end
-
-  if node['fmw_domain'].attribute?('soa_suite_cluster') and node['fmw']['version'] == '10.3.6'
-    if VERSION.start_with? '11.'
-      ruby_block "loading for chef 11 extension soa_suite jms" do
-        block do
-          res = Chef::Resource::Chef::Resource::FmwDomainWlstWindows.new( "WLST add soa_suite JMS cluster configuration", run_context )
-          res.version             node['fmw']['version']
-          res.script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
-          res.middleware_home_dir node['fmw']['middleware_home_dir']
-          res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-          res.java_home_dir       node['fmw']['java_home_dir']
-          res.tmp_dir             node['fmw']['tmp_dir']
-          res.run_action          :execute unless ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0
-        end
-      end
-    else
-      # add soa_suite JMS cluster configuration
-      fmw_domain_wlst "WLST add soa_suite JMS cluster configuration" do
-        version             node['fmw']['version']
-        script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
-        middleware_home_dir node['fmw']['middleware_home_dir']
-        weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        java_home_dir       node['fmw']['java_home_dir']
-        tmp_dir             node['fmw']['tmp_dir']
-        not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
-                 ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0 }
-      end
+               ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0 }
     end
   end
 
@@ -230,64 +199,31 @@ else
   end
 
   # add domain extension soa_suite
-  if VERSION.start_with? '11.'
-    ruby_block "loading for chef 11 extension soa_suite" do
-      block do
-        res = Chef::Resource::Chef::Resource::FmwDomainWlst.new( "WLST add soa_suite domain extension", run_context )
-        res.version             node['fmw']['version']
-        res.script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
-        res.middleware_home_dir node['fmw']['middleware_home_dir']
-        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        res.java_home_dir       node['fmw']['java_home_dir']
-        res.tmp_dir             node['fmw']['tmp_dir']
-        res.os_user             node['fmw']['os_user']
-        res.repository_password domain_params['repository_password']
-        res.run_action          :execute unless ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0
-      end
-    end
-  else
-    fmw_domain_wlst "WLST add soa_suite domain extension" do
+  fmw_domain_wlst "WLST add soa_suite domain extension" do
+    version             node['fmw']['version']
+    script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
+    middleware_home_dir node['fmw']['middleware_home_dir']
+    weblogic_home_dir   node['fmw']['weblogic_home_dir']
+    java_home_dir       node['fmw']['java_home_dir']
+    tmp_dir             node['fmw']['tmp_dir']
+    os_user             node['fmw']['os_user']
+    repository_password domain_params['repository_password']
+    not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
+             ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0 }
+  end
+
+  if node['fmw_domain'].attribute?('soa_suite_cluster') and node['fmw']['version'] == '10.3.6'
+    # add soa_suite JMS cluster configuration
+    fmw_domain_wlst "WLST add soa_suite JMS cluster configuration" do
       version             node['fmw']['version']
-      script_file         "#{node['fmw']['tmp_dir']}/soa_suite.py"
+      script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
       middleware_home_dir node['fmw']['middleware_home_dir']
       weblogic_home_dir   node['fmw']['weblogic_home_dir']
       java_home_dir       node['fmw']['java_home_dir']
       tmp_dir             node['fmw']['tmp_dir']
       os_user             node['fmw']['os_user']
-      repository_password domain_params['repository_password']
       not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
-               ::File.readlines("#{domain_path}/config/config.xml").grep(/soa-infra/).size > 0 }
-    end
-  end
-
-  if node['fmw_domain'].attribute?('soa_suite_cluster') and node['fmw']['version'] == '10.3.6'
-    # add soa_suite JMS cluster configuration
-    if VERSION.start_with? '11.'
-      ruby_block "loading for chef 11 extension soa_suite jms" do
-        block do
-          res = Chef::Resource::Chef::Resource::FmwDomainWlst.new( "WLST add soa_suite JMS cluster configuration" , run_context )
-          res.version             node['fmw']['version']
-          res.script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
-          res.middleware_home_dir node['fmw']['middleware_home_dir']
-          res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-          res.java_home_dir       node['fmw']['java_home_dir']
-          res.tmp_dir             node['fmw']['tmp_dir']
-          res.os_user             node['fmw']['os_user']
-          res.run_action          :execute unless  ::File.exist?("#{domain_path}/config/config.xml") == true and ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0 
-        end
-      end
-    else
-      fmw_domain_wlst "WLST add soa_suite JMS cluster configuration" do
-        version             node['fmw']['version']
-        script_file         "#{node['fmw']['middleware_home_dir']}/Oracle_SOA1/bin/soa-createUDD.py --domain_home #{domain_path} --soacluster #{soa_cluster} --create_jms true"
-        middleware_home_dir node['fmw']['middleware_home_dir']
-        weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        java_home_dir       node['fmw']['java_home_dir']
-        tmp_dir             node['fmw']['tmp_dir']
-        os_user             node['fmw']['os_user']
-        not_if { ::File.exist?("#{domain_path}/config/config.xml") == true and
-                 ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0 }
-      end
+               ::File.readlines("#{domain_path}/config/config.xml").grep(/<name>SOAJMSModuleUDDs<\/name>/).size > 0 }
     end
   end
 end

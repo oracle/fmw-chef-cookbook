@@ -71,32 +71,16 @@ if node['os'].include?('windows')
   end
 
   # add domain extension em
-  if VERSION.start_with? '11.'
-    ruby_block "loading for chef 11 extension jrf" do
-      block do
-        res = Chef::Resource::Chef::Resource::FmwDomainWlstWindows.new("WLST add jrf domain extension", run_context )
-        res.version             node['fmw']['version']
-        res.script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
-        res.middleware_home_dir node['fmw']['middleware_home_dir']
-        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        res.java_home_dir       node['fmw']['java_home_dir']
-        res.tmp_dir             node['fmw']['tmp_dir']
-        res.repository_password domain_params['repository_password']
-        res.run_action          :execute unless ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0
-      end
-    end
-  else
-    fmw_domain_wlst "WLST add jrf domain extension" do
-      version             node['fmw']['version']
-      script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
-      middleware_home_dir node['fmw']['middleware_home_dir']
-      weblogic_home_dir   node['fmw']['weblogic_home_dir']
-      java_home_dir       node['fmw']['java_home_dir']
-      tmp_dir             node['fmw']['tmp_dir']
-      repository_password domain_params['repository_password']
-      not_if { ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and
-               ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0 }
-    end
+  fmw_domain_wlst "WLST add jrf domain extension" do
+    version             node['fmw']['version']
+    script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
+    middleware_home_dir node['fmw']['middleware_home_dir']
+    weblogic_home_dir   node['fmw']['weblogic_home_dir']
+    java_home_dir       node['fmw']['java_home_dir']
+    tmp_dir             node['fmw']['tmp_dir']
+    repository_password domain_params['repository_password']
+    not_if { ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and
+             ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0 }
   end
 else
 
@@ -132,34 +116,17 @@ else
   end
 
   # add domain extension em
-  if VERSION.start_with? '11.'
-    ruby_block "loading for chef 11 extension jrf" do
-      block do
-        res = Chef::Resource::Chef::Resource::FmwDomainWlst.new("WLST add jrf domain extension", run_context )
-        res.version             node['fmw']['version']
-        res.script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
-        res.middleware_home_dir node['fmw']['middleware_home_dir']
-        res.weblogic_home_dir   node['fmw']['weblogic_home_dir']
-        res.java_home_dir       node['fmw']['java_home_dir']
-        res.tmp_dir             node['fmw']['tmp_dir']
-        res.os_user             node['fmw']['os_user']
-        res.repository_password domain_params['repository_password']
-        res.run_action          :execute unless ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0
-      end
-    end
-  else
-    fmw_domain_wlst "WLST add jrf domain extension" do
-      version             node['fmw']['version']
-      script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
-      middleware_home_dir node['fmw']['middleware_home_dir']
-      weblogic_home_dir   node['fmw']['weblogic_home_dir']
-      java_home_dir       node['fmw']['java_home_dir']
-      tmp_dir             node['fmw']['tmp_dir']
-      os_user             node['fmw']['os_user']
-      repository_password domain_params['repository_password']
-      not_if { ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and
-               ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0 }
-    end
+  fmw_domain_wlst "WLST add jrf domain extension" do
+    version             node['fmw']['version']
+    script_file         "#{node['fmw']['tmp_dir']}/jrf.py"
+    middleware_home_dir node['fmw']['middleware_home_dir']
+    weblogic_home_dir   node['fmw']['weblogic_home_dir']
+    java_home_dir       node['fmw']['java_home_dir']
+    tmp_dir             node['fmw']['tmp_dir']
+    os_user             node['fmw']['os_user']
+    repository_password domain_params['repository_password']
+    not_if { ::File.exist?("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml") == true and
+             ::File.readlines("#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/config/config.xml").grep(/em.ear/).size > 0 }
   end
 end
 

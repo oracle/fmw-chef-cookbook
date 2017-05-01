@@ -69,75 +69,32 @@ template node['fmw']['tmp_dir'] + '/soa_' + fmw_template do
             option_array: option_array)
 end
 
-# chef version 11
-if VERSION.start_with? '11.'
-  if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
-    ruby_block "loading for chef 11 install soa_suite extract" do
-      block do
-        if node['os'].include?('windows')
-          res = Chef::Resource::Chef::Resource::FmwInstFmwExtractWindows.new('soa_suite', run_context )
-        else
-          res = Chef::Resource::Chef::Resource::FmwInstFmwExtract.new('soa_suite', run_context )
-        end
-        res.source_file         node['fmw_inst']['soa_suite_source_file']
-        res.source_2_file       node['fmw_inst']['soa_suite_source_2_file'] if node['fmw_inst'].attribute?('soa_suite_source_2_file')
-        res.os_user             node['fmw']['os_user']                      if unix
-        res.os_group            node['fmw']['os_group']                     if unix
-        res.tmp_dir             node['fmw']['tmp_dir']
-        res.version             node['fmw']['version']                      unless unix
-        res.middleware_home_dir node['fmw']['middleware_home_dir']          unless unix
-        res.run_action          :extract
-      end
-    end
-  end
-  ruby_block "loading for chef 11 install soa_suite" do
-    block do
-      if node['os'].include?('windows')
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallWindows.new('soa_suite', run_context )
-      elsif node['os'].include?('solaris2')
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallSolaris.new('soa_suite', run_context )
-      else
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallLinux.new('soa_suite', run_context )
-      end
-      res2.java_home_dir       node['fmw']['java_home_dir']
-      res2.installer_file      fmw_installer_file
-      res2.rsp_file            node['fmw']['tmp_dir'] + '/soa_' + fmw_template
-      res2.version             node['fmw']['version']
-      res2.oracle_home_dir     fmw_oracle_home
-      res2.orainst_dir         node['fmw']['orainst_dir']                      if unix
-      res2.os_user             node['fmw']['os_user']                          if unix
-      res2.os_group            node['fmw']['os_group']                         if unix
-      res2.tmp_dir             node['fmw']['tmp_dir']
-      res2.run_action          :install
-    end
-  end
-else
-  if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
-    fmw_inst_fmw_extract 'soa_suite' do
-      action              :extract
-      source_file         node['fmw_inst']['soa_suite_source_file']
-      source_2_file       node['fmw_inst']['soa_suite_source_2_file'] if node['fmw_inst'].attribute?('soa_suite_source_2_file')
-      os_user             node['fmw']['os_user']                      if unix
-      os_group            node['fmw']['os_group']                     if unix
-      tmp_dir             node['fmw']['tmp_dir']
-      version             node['fmw']['version']                      unless unix
-      middleware_home_dir node['fmw']['middleware_home_dir']          unless unix
-    end
-  end
-
-  fmw_inst_fmw_install 'soa_suite' do
-    action              :install
-    java_home_dir       node['fmw']['java_home_dir']
-    installer_file      fmw_installer_file
-    rsp_file            node['fmw']['tmp_dir'] + '/soa_' + fmw_template
-    version             node['fmw']['version']
-    oracle_home_dir     fmw_oracle_home
-    orainst_dir         node['fmw']['orainst_dir']                      if unix
-    os_user             node['fmw']['os_user']                          if unix
-    os_group            node['fmw']['os_group']                         if unix
+if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
+  fmw_inst_fmw_extract 'soa_suite' do
+    action              :extract
+    source_file         node['fmw_inst']['soa_suite_source_file']
+    source_2_file       node['fmw_inst']['soa_suite_source_2_file'] if node['fmw_inst'].attribute?('soa_suite_source_2_file')
+    os_user             node['fmw']['os_user']                      if unix
+    os_group            node['fmw']['os_group']                     if unix
     tmp_dir             node['fmw']['tmp_dir']
+    version             node['fmw']['version']                      unless unix
+    middleware_home_dir node['fmw']['middleware_home_dir']          unless unix
   end
 end
+
+fmw_inst_fmw_install 'soa_suite' do
+  action              :install
+  java_home_dir       node['fmw']['java_home_dir']
+  installer_file      fmw_installer_file
+  rsp_file            node['fmw']['tmp_dir'] + '/soa_' + fmw_template
+  version             node['fmw']['version']
+  oracle_home_dir     fmw_oracle_home
+  orainst_dir         node['fmw']['orainst_dir']                      if unix
+  os_user             node['fmw']['os_user']                          if unix
+  os_group            node['fmw']['os_group']                         if unix
+  tmp_dir             node['fmw']['tmp_dir']
+end
+
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"
 puts "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished compile phase"

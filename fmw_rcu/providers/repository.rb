@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('repository provider, repository load current resource')
-  @current_resource ||= Chef::Resource::FmwRcuRepository.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_rcu_repository').new(new_resource.name)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
   @current_resource.oracle_home_dir(@new_resource.oracle_home_dir)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)

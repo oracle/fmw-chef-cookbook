@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('nodemanager_service provider, nodemanager_service_windows provider load current resource')
-  @current_resource ||= Chef::Resource::FmwDomainNodemanagerServiceWindows.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_nodemanager_service_windows').new(new_resource.name)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)
   @current_resource.domain_dir(@new_resource.domain_dir)
   @current_resource.domain_name(@new_resource.domain_name)
@@ -44,10 +44,10 @@ action :configure do
       else
         local_prod_name = new_resource.prod_name
       end
-      service_check_name = '#{local_prod_name} NodeManager'
+      service_check_name = "#{local_prod_name} NodeManager"
     else
       if new_resource.prod_name.nil? or new_resource.prod_name == ''
-        local_prod_name = 'Oracle Weblogic #{new_resource.domain_name}'
+        local_prod_name = "Oracle Weblogic #{new_resource.domain_name}"
       else
         local_prod_name = new_resource.prod_name
       end

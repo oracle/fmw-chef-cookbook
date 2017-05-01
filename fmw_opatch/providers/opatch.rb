@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('fmw extract provider, fmw_extract load current resource')
-  @current_resource ||= Chef::Resource::FmwOpatchOpatch.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_opatch_opatch').new(new_resource.name)
   @current_resource.patch_id(@new_resource.patch_id)
   @current_resource.oracle_home_dir(@new_resource.oracle_home_dir)
   @current_resource.java_home_dir(@new_resource.java_home_dir)

@@ -1,7 +1,7 @@
 # Oracle WebLogic CHEF cookbooks
 
 ## Chef support
-- Version 12, 13 ( for use v0.1.3 release for chef 11)
+- Version 12, 13 ( use v0.1.3 release for chef 11 support)
 - Chef solo, client/server
 - Databags (encrypted)
 

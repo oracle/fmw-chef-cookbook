@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('fmw extract provider, fmw_extract load current resource')
-  @current_resource ||= Chef::Resource::FmwInstFmwExtract.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_inst_fmw_extract').new(new_resource.name)
   @current_resource.source_file(@new_resource.source_file)
   @current_resource.source_2_file(@new_resource.source_2_file)
   @current_resource.source_3_file(@new_resource.source_3_file)

@@ -16,20 +16,20 @@ platforms:
         - ["/Users/edwinbiemond/software", "/software"]
   - name: oel-7.0
     driver_config:
-      box: OEL-7.2-x86_64
+      box: OEL7_2-x86_64
       customize:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: oel-6.6
     driver_config:
-      box: OEL-6.6
+      box: OEL6_6-x86_64_plain
       customize:
         memory: 2048
         cpus: 1
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: oel-5.8
     driver_config:
       box: OEL-5.8
@@ -44,20 +44,20 @@ platforms:
     driver_config:
       box: win2012r2
       customize:
-        memory: 4096
+        memory: 3072
         cpus: 2
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: windows-8.1
     transport:
       name: winrm
     driver_config:
       box: win81x64
       customize:
-        memory: 4096
+        memory: 3072
         cpus: 2
       synced_folders:
-        - ["/Users/edwinbiemond/software", "/software"]
+        - ["C:/software", "/software"]
   - name: solaris-10
     driver_config:
       box: solaris10-x86_64
@@ -85,11 +85,11 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/java/jdk1.8.0_111"
+        java_home_dir:       "/usr/java/jdk1.8.0_131"
         middleware_home_dir: "/opt/oracle/middleware_1221"
         version:             "12.2.1.2"
       fmw_jdk:
-        source_file:         "/software/jdk-8u111-linux-x64.tar.gz"
+        source_file:         "/software/jdk-8u131-linux-x64.tar.gz"
       fmw_wls:
         source_file:         "/software/fmw_12.2.1.2.0_wls.jar"
     excludes:
@@ -105,10 +105,10 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/java/jdk1.8.0_40"
+        java_home_dir:       "/usr/java/jdk1.8.0_131"
         middleware_home_dir: "/opt/oracle/middleware_1213"
       fmw_jdk:
-        source_file:         "/software/jdk-8u40-linux-x64.tar.gz"
+        source_file:         "/software/jdk-8u131-linux-x64.tar.gz"
       fmw_wls:
         source_file:         "/software/fmw_12.1.3.0.0_wls.jar"
     excludes:
@@ -123,10 +123,10 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/jdk/instances/jdk1.8.0_40"
+        java_home_dir:       "/usr/jdk/instances/jdk1.8.0_131"
         middleware_home_dir: "/opt/oracle/middleware_1213"
       fmw_jdk:
-        source_file:         "/software/jdk-8u40-solaris-x64.tar.gz"
+        source_file:         "/software/jdk-8u131-solaris-x64.tar.gz"
       fmw_wls:
         source_file:         "/software/fmw_12.1.3.0.0_wls.jar"
     excludes:
@@ -142,12 +142,12 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:           "c:\\java\\jdk1.7.0_75"
+        java_home_dir:           "c:\\java\\jdk1.7.0_79"
         middleware_home_dir:     "c:\\oracle\\middleware_1213"
         version:                 "12.1.3"
         tmp_dir:                 "C:\\Users\\vagrant\\AppData\\Local\\temp"
       fmw_jdk:
-        source_file:             "c:\\software\\jdk-7u75-windows-x64.exe"
+        source_file:             "c:\\software\\jdk-7u79-windows-x64.exe"
       fmw_wls:
         source_file:             "c:\\software\\fmw_12.1.3.0.0_wls.jar"
     excludes:
@@ -165,10 +165,10 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/java/jdk1.7.0_75"
+        java_home_dir:       "/usr/java/jdk1.7.0_79"
         middleware_home_dir: "/opt/oracle/middleware_1213"
       fmw_jdk:
-        source_file:         "/software/jdk-7u75-linux-x64.tar.gz"
+        source_file:         "/software/jdk-7u79-linux-x64.tar.gz"
       fmw_wls:
         source_file:         "/software/fmw_12.1.3.0.0_infrastructure.jar"
         install_type:        "infra"
@@ -183,12 +183,12 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:           "c:\\java\\jdk1.7.0_75"
+        java_home_dir:           "c:\\java\\jdk1.7.0_79"
         middleware_home_dir:     "c:\\oracle\\middleware_1213"
         version:                 "12.1.3"
         tmp_dir:                 "C:\\Users\\vagrant\\AppData\\Local\\temp"
       fmw_jdk:
-        source_file:             "c:\\software\\jdk-7u75-windows-x64.exe"
+        source_file:             "c:\\software\\jdk-7u79-windows-x64.exe"
       fmw_wls:
         source_file:             "c:\\software\\fmw_12.1.3.0.0_infrastructure.jar"
         install_type:            "infra"
@@ -207,11 +207,11 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:       "/usr/java/jdk1.7.0_75"
+        java_home_dir:       "/usr/java/jdk1.7.0_79"
         middleware_home_dir: "/opt/oracle/middleware_1036"
         version:             "10.3.6"
       fmw_jdk:
-        source_file:         "/software/jdk-7u75-linux-x64.tar.gz"
+        source_file:         "/software/jdk-7u79-linux-x64.tar.gz"
       fmw_wls:
         source_file:         "/software/wls1036_generic.jar"
     excludes:
@@ -225,12 +225,12 @@ suites:
       - recipe[fmw_wls::install]
     attributes:
       fmw:
-        java_home_dir:           "c:\\java\\jdk1.7.0_75"
+        java_home_dir:           "c:\\java\\jdk1.7.0_79"
         middleware_home_dir:     "c:\\oracle\\middleware_1036"
         version:                 "10.3.6"
         tmp_dir:                 "C:\\Users\\vagrant\\AppData\\Local\\temp"
       fmw_jdk:
-        source_file:             "c:\\software\\jdk-7u75-windows-x64.exe"
+        source_file:             "c:\\software\\jdk-7u79-windows-x64.exe"
       fmw_wls:
         source_file:             "c:\\software\\wls1036_generic.jar"
     excludes:

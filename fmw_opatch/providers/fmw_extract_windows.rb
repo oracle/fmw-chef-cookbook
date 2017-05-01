@@ -14,7 +14,7 @@ end
 
 def load_current_resource
   Chef::Log.info('fmw extract provider, fmw_extract load current resource')
-  @current_resource ||= Chef::Resource::FmwOpatchFmwExtractWindows.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_opatch_fmw_extract_windows').new(new_resource.name)
   @current_resource.source_file(@new_resource.source_file)
   @current_resource.tmp_dir(@new_resource.tmp_dir)
   @current_resource.version(@new_resource.version)

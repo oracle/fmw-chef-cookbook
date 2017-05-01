@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('bsu provider, bsu load current resource')
-  @current_resource ||= Chef::Resource::FmwBsuBsu.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_bsu_bsu').new(new_resource.name)
   @current_resource.patch_id(@new_resource.patch_id)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)
   @current_resource.os_user(@new_resource.os_user)

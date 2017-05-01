@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('wls provider, wls_windows load current resource')
-  @current_resource ||= Chef::Resource::FmwWlsWlsWindows.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_wls_wls_windows').new(new_resource.name)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
   @current_resource.source_file(@new_resource.source_file)
   @current_resource.version(@new_resource.version)

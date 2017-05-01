@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('adminserver provider, adminserver_windows provider load current resource')
-  @current_resource ||= Chef::Resource::FmwDomainAdminserverWindows.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_adminserver_windows').new(new_resource.name)
   @current_resource.domain_dir(@new_resource.domain_dir)
   @current_resource.domain_name(@new_resource.domain_name)
   @current_resource.adminserver_name(@new_resource.adminserver_name)

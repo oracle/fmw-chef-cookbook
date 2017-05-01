@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('nodemanager_service provider, nodemanager_service_solaris provider load current resource')
-  @current_resource ||= Chef::Resource::FmwDomainNodemanagerServiceSolaris.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_nodemanager_service_solaris').new(new_resource.name)
   @current_resource.bin_dir(@new_resource.bin_dir)
   @current_resource.os_user(@new_resource.os_user)
   @current_resource.tmp_dir(@new_resource.tmp_dir)

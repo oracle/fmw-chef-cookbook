@@ -5,7 +5,7 @@
 # Copyright 2015 Oracle. All Rights Reserved
 #
 # Adminserver control on a windows host
-provides :fmw_domain_adminserver, os: 'windows' if respond_to?(:provides)
+provides :fmw_domain_wlst, os: 'windows' if respond_to?(:provides)
 
 require 'chef/mixin/shell_out'
 include Chef::Mixin::ShellOut
@@ -16,7 +16,7 @@ end
 
 def load_current_resource
   Chef::Log.info('wlst provider, wlst provider load current resource')
-  @current_resource ||= Chef::Resource::FmwDomainWlstWindows.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_wlst_windows').new(new_resource.name)
   @current_resource.version(@new_resource.version)
   @current_resource.script_file(@new_resource.script_file)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)

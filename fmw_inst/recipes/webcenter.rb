@@ -63,36 +63,15 @@ template node['fmw']['tmp_dir'] + '/wc_' + fmw_template do
             option_array: option_array)
 end
 
-# chef version 11
-if VERSION.start_with? '11.'
-  ruby_block "loading for chef 11 install webcenter extract" do
-    block do
-      if node['os'].include?('windows')
-        res = Chef::Resource::Chef::Resource::FmwInstFmwExtractWindows.new('webcenter', run_context )
-      else
-        res = Chef::Resource::Chef::Resource::FmwInstFmwExtract.new('webcenter', run_context )
-      end
-      res.source_file         node['fmw_inst']['webcenter_source_file']
-      res.source_2_file       node['fmw_inst']['webcenter_source_2_file'] if node['fmw_inst'].attribute?('webcenter_source_2_file')
-      res.os_user             node['fmw']['os_user']                      if unix
-      res.os_group            node['fmw']['os_group']                     if unix
-      res.tmp_dir             node['fmw']['tmp_dir']
-      res.version             node['fmw']['version']                      unless unix
-      res.middleware_home_dir node['fmw']['middleware_home_dir']          unless unix
-      res.run_action          :extract
-    end
-  end
-else
-  fmw_inst_fmw_extract 'webcenter' do
-    action              :extract
-    source_file         node['fmw_inst']['webcenter_source_file']
-    source_2_file       node['fmw_inst']['webcenter_source_2_file']   if node['fmw_inst'].attribute?('webcenter_source_2_file')
-    os_user             node['fmw']['os_user']                        if unix
-    os_group            node['fmw']['os_group']                       if unix
-    tmp_dir             node['fmw']['tmp_dir']
-    version             node['fmw']['version']                        unless unix
-    middleware_home_dir node['fmw']['middleware_home_dir']            unless unix
-  end
+fmw_inst_fmw_extract 'webcenter' do
+  action              :extract
+  source_file         node['fmw_inst']['webcenter_source_file']
+  source_2_file       node['fmw_inst']['webcenter_source_2_file']   if node['fmw_inst'].attribute?('webcenter_source_2_file')
+  os_user             node['fmw']['os_user']                        if unix
+  os_group            node['fmw']['os_group']                       if unix
+  tmp_dir             node['fmw']['tmp_dir']
+  version             node['fmw']['version']                        unless unix
+  middleware_home_dir node['fmw']['middleware_home_dir']            unless unix
 end
 
 if platform_family?('rhel')
@@ -132,42 +111,17 @@ if platform_family?('rhel')
   end
 end
 
-# chef version 11
-if VERSION.start_with? '11.'
-  ruby_block "loading for chef 11 install webcenter" do
-    block do
-      if node['os'].include?('windows')
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallWindows.new('webcenter', run_context )
-      elsif node['os'].include?('solaris2')
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallSolaris.new('webcenter', run_context )
-      else
-        res2 = Chef::Resource::Chef::Resource::FmwInstFmwInstallLinux.new('webcenter', run_context )
-      end
-      res2.java_home_dir       node['fmw']['java_home_dir']
-      res2.installer_file      fmw_installer_file
-      res2.rsp_file            node['fmw']['tmp_dir'] + '/wc_' + fmw_template
-      res2.version             node['fmw']['version']
-      res2.oracle_home_dir     fmw_oracle_home
-      res2.orainst_dir         node['fmw']['orainst_dir']                      if unix
-      res2.os_user             node['fmw']['os_user']                          if unix
-      res2.os_group            node['fmw']['os_group']                         if unix
-      res2.tmp_dir             node['fmw']['tmp_dir']
-      res2.run_action          :install
-    end
-  end
-else
-  fmw_inst_fmw_install 'webcenter' do
-    action              :install
-    java_home_dir       node['fmw']['java_home_dir']
-    installer_file      fmw_installer_file
-    rsp_file            node['fmw']['tmp_dir'] + '/wc_' + fmw_template
-    version             node['fmw']['version']
-    oracle_home_dir     fmw_oracle_home
-    orainst_dir         node['fmw']['orainst_dir']                     if unix
-    os_user             node['fmw']['os_user']                         if unix
-    os_group            node['fmw']['os_group']                        if unix
-    tmp_dir             node['fmw']['tmp_dir']
-  end
+fmw_inst_fmw_install 'webcenter' do
+  action              :install
+  java_home_dir       node['fmw']['java_home_dir']
+  installer_file      fmw_installer_file
+  rsp_file            node['fmw']['tmp_dir'] + '/wc_' + fmw_template
+  version             node['fmw']['version']
+  oracle_home_dir     fmw_oracle_home
+  orainst_dir         node['fmw']['orainst_dir']                     if unix
+  os_user             node['fmw']['os_user']                         if unix
+  os_group            node['fmw']['os_group']                        if unix
+  tmp_dir             node['fmw']['tmp_dir']
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"

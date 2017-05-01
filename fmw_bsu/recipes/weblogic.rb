@@ -64,27 +64,11 @@ elsif node['os'].include?('windows')
 
 end
 
-if VERSION.start_with? '11.'
-  ruby_block "loading for chef 11 bsu install" do
-    block do
-      if node['os'].include?('windows')
-        res = Chef::Resource::Chef::Resource::FmwBsuBsuWindows.new( node['fmw_bsu']['patch_id'], run_context )
-      else
-        res = Chef::Resource::Chef::Resource::FmwBsuBsu.new( node['fmw_bsu']['patch_id'], run_context )
-      end
-      res.patch_id            node['fmw_bsu']['patch_id']
-      res.middleware_home_dir node['fmw']['middleware_home_dir']
-      res.os_user             node['fmw']['os_user'] if ['solaris2', 'linux'].include?(node['os'])
-      res.run_action          :install
-    end
-  end
-else
-  fmw_bsu_bsu node['fmw_bsu']['patch_id'] do
-    action :install
-    patch_id node['fmw_bsu']['patch_id']
-    middleware_home_dir node['fmw']['middleware_home_dir']
-    os_user node['fmw']['os_user'] if ['solaris2', 'linux'].include?(node['os'])
-  end
+fmw_bsu_bsu node['fmw_bsu']['patch_id'] do
+  action :install
+  patch_id node['fmw_bsu']['patch_id']
+  middleware_home_dir node['fmw']['middleware_home_dir']
+  os_user node['fmw']['os_user'] if ['solaris2', 'linux'].include?(node['os'])
 end
 
 # log  "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Finished execution phase"

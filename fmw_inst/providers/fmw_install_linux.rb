@@ -13,7 +13,7 @@ end
 
 def load_current_resource
   Chef::Log.info('fmw install provider, fmw_install_linux load current resource')
-  @current_resource ||= Chef::Resource::FmwInstFmwInstallLinux.new(new_resource.name)
+  @current_resource ||= Chef::ResourceResolver.resolve('fmw_inst_fmw_install_linux').new(new_resource.name)
   @current_resource.java_home_dir(@new_resource.java_home_dir)
   @current_resource.installer_file(@new_resource.installer_file)
   @current_resource.rsp_file(@new_resource.rsp_file)
