@@ -1,6 +1,7 @@
 
 default['fmw']['version']                 = '12.1.3' # 10.3.6|12.1.1|12.1.2|12.1.3|12.2.1|12.2.1.1|12.2.1.2
 default['fmw_wls']['install_type']        = 'wls' # infra or wls
+default['fmw']['prod_name']               = nil
 
 if platform_family?('windows')
   default['fmw']['middleware_home_dir']   = 'C:/oracle/middleware'

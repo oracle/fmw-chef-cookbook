@@ -26,13 +26,21 @@ if ['10.3.6'].include?(node['fmw']['version'])
   bin_dir               = "#{node['fmw']['weblogic_home_dir']}/server/bin"
   nodemanager_template  = 'nodemanager.properties_11g'
   nodemanager_check     = node['fmw']['weblogic_home_dir']
-  script_name           = "nodemanager_11g"
+  if node['fmw']['prod_name'].nil? or node['fmw']['prod_name'] == ''
+    script_name           = "nodemanager_11g"
+  else
+    script_name           = "#{node['fmw']['prod_name']}_nodemanager_11g"
+  end
 else
   nodemanager_home_dir  = "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/nodemanager"
   bin_dir               = "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}/bin"
   nodemanager_template  = 'nodemanager.properties_12c'
   nodemanager_check     = "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}"
-  script_name           = "nodemanager_#{domain_params['domain_name']}"
+  if node['fmw']['prod_name'].nil? or node['fmw']['prod_name'] == ''
+    script_name           = "nodemanager_11g"
+  else
+    script_name           = "#{node['fmw']['prod_name']}_nodemanager_#{domain_params['domain_name']}"
+  end
 end
 
 nodemanager_log_file  = "#{nodemanager_home_dir}/nodemanager.log"
@@ -141,6 +149,8 @@ elsif node['os'].include?('windows')
         res.middleware_home_dir node['fmw']['middleware_home_dir']
         res.bin_dir             bin_dir
         res.java_home_dir       node['fmw']['java_home_dir']
+        res.prod_name           node['fmw']['prod_name']
+        res.service_description node['fmw_domain']['nodemanager_service_description']
         res.run_action          :configure
       end
     end
@@ -152,6 +162,8 @@ elsif node['os'].include?('windows')
       middleware_home_dir node['fmw']['middleware_home_dir']
       bin_dir             bin_dir
       java_home_dir       node['fmw']['java_home_dir']
+      prod_name           node['fmw']['prod_name']
+      service_description node['fmw_domain']['nodemanager_service_description']
     end
   end
 

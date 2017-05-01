@@ -1,8 +1,9 @@
 include_attribute 'fmw_wls'
 
 default['fmw_domain']['nodemanager_port']               = 5556
+default['fmw_domain']['nodemanager_service_description'] = nil
 
-if platform_family?('windows')
+if node['platform_family'] =='windows'
   default['fmw_domain']['domains_dir']    = 'C:/oracle/middleware/user_projects/domains'
   default['fmw_domain']['apps_dir']       = 'C:/oracle/middleware/user_projects/applications'
 
@@ -16,7 +17,7 @@ else
   default['fmw_domain']['apps_dir']       = '/opt/oracle/middleware/user_projects/applications'
 end
 
-case platform_family
+case node['platform_family']
 when 'debian', 'rhel'
   default['fmw']['orainst_dir']       = '/etc'
   default['fmw']['user_home_dir']     = '/home'

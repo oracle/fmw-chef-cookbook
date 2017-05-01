@@ -24,3 +24,7 @@ attribute :version, kind_of: String, required: true
 attribute :bin_dir, kind_of: String, required: true
 # java home path
 attribute :java_home_dir, kind_of: String, required: true
+# prod name for product re-branding
+attribute :prod_name, kind_of: String, required: false, default: nil
+# service description for product re-branding
+attribute :service_description, kind_of: String, required: false, default: nil
