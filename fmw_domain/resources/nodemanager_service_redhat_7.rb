@@ -18,3 +18,6 @@ default_action :configure
 attribute :user_home_dir, kind_of: String, required: true
 # operating system user
 attribute :os_user, kind_of: String, required: true
+
+# process start-up type for this service unit.
+attribute :type, kind_of: String, required: false , default: 'simple'

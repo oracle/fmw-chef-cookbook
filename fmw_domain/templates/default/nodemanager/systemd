@@ -3,7 +3,7 @@ Description=WebLogic <%= @script_name %> service
 After=syslog.target network.target
 
 [Service]
-Type=simple
+Type=<%= @type %>
 ExecStart=<%= @user_home_dir %>/<%= @os_user %>/<%= @script_name %> start
 ExecStop=<%= @user_home_dir %>/<%= @os_user %>/<%= @script_name %> stop
 TimeoutSec=30

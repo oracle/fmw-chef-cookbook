@@ -84,8 +84,10 @@ if node['os'].include?('linux')
 
   if (node['platform_family'] == 'rhel' and node['platform_version'] >= '7.0')
     location = "#{node['fmw']['user_home_dir']}/#{node['fmw']['os_user']}/#{script_name}"
+    type = node['fmw_domain']['nodemanager_service_type'] 
   else
     location = "/etc/init.d/#{script_name}"
+    type = false
   end
 
   # add linux script to the right location
@@ -102,6 +104,7 @@ if node['os'].include?('linux')
   fmw_domain_nodemanager_service script_name do
     user_home_dir node['fmw']['user_home_dir']
     os_user       node['fmw']['os_user']
+    type          type if type
   end
 elsif node['os'].include?('solaris2')
 

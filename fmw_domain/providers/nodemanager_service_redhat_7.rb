@@ -44,7 +44,8 @@ action :configure do
       mode 0755
       variables(script_name:    new_resource.name,
                 user_home_dir:  new_resource.user_home_dir,
-                os_user:        new_resource.os_user)
+                os_user:        new_resource.os_user,
+                type:           new_resource.type)
       notifies :run, 'execute[systemctl-daemon-reload]', :immediately
       notifies :run, 'execute[systemctl-enable]', :immediately
       notifies :enable, "service[#{new_resource.name}.service]", :immediately
