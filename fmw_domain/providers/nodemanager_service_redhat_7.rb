@@ -20,6 +20,7 @@ def load_current_resource
   @current_resource ||= Chef::ResourceResolver.resolve('fmw_domain_nodemanager_service_redhat_7').new(new_resource.name)
   @current_resource.user_home_dir(@new_resource.user_home_dir)
   @current_resource.os_user(@new_resource.os_user)
+  @current_resource.type(@new_resource.type)
   @current_resource
 end
 

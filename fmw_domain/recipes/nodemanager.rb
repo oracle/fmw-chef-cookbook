@@ -104,7 +104,7 @@ if node['os'].include?('linux')
   fmw_domain_nodemanager_service script_name do
     user_home_dir node['fmw']['user_home_dir']
     os_user       node['fmw']['os_user']
-    type          type if type
+    type          type
   end
 elsif node['os'].include?('solaris2')
 
