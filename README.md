@@ -1,11 +1,11 @@
 # Oracle WebLogic CHEF cookbooks
 
 ## Chef support
-- Version 12, 13 ( use v0.1.3 release for chef 11 support)
+- Version 12, 13, 14 ( use v0.1.3 release for chef 11 support)
 - Chef solo, client/server
 - Databags (encrypted)
 
-## WebLogic Chef 12 & 13 Support for
+## WebLogic Chef 12, 13 & 14 Support for
 - The installation & configuration of the JDK, WebLogic and Fusion Middleware (FMW) software
 - WebLogic & FMW patching
 - WebLogic version 10.3.6, 11.1, 12.1 & 12.2

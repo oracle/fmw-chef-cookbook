@@ -80,7 +80,7 @@ action :install do
         action :create
       end
 
-      if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(version)
+      if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3', '12.1.2'].include?(version)
         template = 'wls_12c.rsp'
       elsif ['10.3.6', '12.1.1'].include?(version)
         template = 'wls_11g.rsp'
@@ -102,7 +102,7 @@ action :install do
         version             version
         os_group            os_group
         os_user             os_user
-        source_file         source_file
+        source2_file        source_file
         template            template
         orainst_dir         orainst_dir
       end

@@ -1,5 +1,10 @@
 # Change Log
 
+## chef-samples v0.1.5 (10 July 2018)
+- Also supports chef 14
+- RCU 11g unzip issue with common & soa_suite recipe
+- support for WebLogic/FMW 12.2.1.3
+
 ## chef-samples v0.1.4 (1 May 2017)
 - Support chef 13, use v0.1.3 release for chef 11
 - Drop support for chef 11

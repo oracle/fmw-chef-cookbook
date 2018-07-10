@@ -18,14 +18,14 @@ rcu_params =  begin
 rcu_params = rcu_params.to_hash if rcu_params.instance_of? Chef::EncryptedDataBagItem
 fail 'did not find the data_bag_item' if rcu_params.length == 0
 
-if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3'].include?(node['fmw']['version'])
   include_recipe 'fmw_wls::install'
 
   fail 'oracle_home_dir parameter cannot be empty' unless node['fmw_rcu'].attribute?('oracle_home_dir')
   oracle_home_dir   = node['fmw_rcu']['oracle_home_dir']
 end
 
-if ['12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3'].include?(node['fmw']['version'])
 
   component_array = ['MDS',
                      'IAU',
@@ -63,7 +63,7 @@ elsif ['10.3.6'].include?(node['fmw']['version'])
                      'BAM']
 
   path = ::File.join(node['fmw']['middleware_home_dir'],'wlserver_10.3','server','adr')
-  
+
   if platform_family?('windows')
     execute "extract rcu file" do
       command "#{path}\\unzip.exe -o #{node['fmw_rcu']['source_file']} -d #{node['fmw']['tmp_dir']}\\rcu"

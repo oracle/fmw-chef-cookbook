@@ -40,13 +40,12 @@ action :install do
     Chef::Log.info("#{@new_resource} doesn't exist, so lets install weblogic")
     converge_by("Create resource #{ @new_resource }") do
 
-
       ora_inventory_dir   = @new_resource.ora_inventory_dir
       middleware_home_dir = @new_resource.name
       version             = @new_resource.version
       tmp_dir             = @new_resource.tmp_dir
       java_home_dir       = @new_resource.java_home_dir
-      source_file         = @new_resource.source_file
+      source_file        = @new_resource.source_file
       install_type        = @new_resource.install_type
 
       registry_key 'HKEY_LOCAL_MACHINE\SOFTWARE\Oracle' do
@@ -54,7 +53,7 @@ action :install do
         action :create_if_missing
       end
 
-      if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(version)
+      if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3', '12.1.2'].include?(version)
         template = 'wls_12c.rsp'
       elsif ['10.3.6', '12.1.1'].include?(version)
         template = 'wls_11g.rsp'
@@ -68,13 +67,15 @@ action :install do
         tmp_dir             tmp_dir
       end
 
+      Chef::Log.info("#{@new_resource} source_file is #{source_file} ")
+
       wls_install 'windows' do
         unix                false
         middleware_home_dir middleware_home_dir
         java_home_dir       java_home_dir
         tmp_dir             tmp_dir
         version             version
-        source_file         source_file
+        source2_file        source_file
         template            template
       end
 

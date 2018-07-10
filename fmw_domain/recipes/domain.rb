@@ -41,7 +41,7 @@ end
 
 fail 'did not find the data_bag_item' if domain_params.length == 0
 
-if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
   wls_base_template = "#{node['fmw']['weblogic_home_dir']}/common/templates/wls/wls.jar"
 elsif ['10.3.6', '12.1.1'].include?(node['fmw']['version'])
   wls_base_template = "#{node['fmw']['weblogic_home_dir']}/common/templates/domains/wls.jar"

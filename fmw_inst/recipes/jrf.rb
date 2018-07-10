@@ -10,7 +10,7 @@ include_recipe 'fmw_wls::install'
 
 fail 'fmw_inst attributes cannot be empty' unless node.attribute?('fmw_inst')
 
-if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3', '12.1.2'].include?(node['fmw']['version'])
   return
 
 elsif ['10.3.6'].include?(node['fmw']['version'])

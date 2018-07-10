@@ -4,7 +4,7 @@ maintainer_email 'fmw-chef-and-puppet_ww@oracle.com'
 license          'MIT'
 description      'Installs FMW Software on a WebLogic middleware environmment'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.4'
+version          '0.1.5'
 
 recipe            "fmw_inst",
                   "This is an empty recipe and does not do anything"

@@ -18,7 +18,7 @@ module DomainHelper
   end
 
   def self.wlst_execute(version, os_user, script_file, weblogic_home_dir, weblogic_password, repository_password)
-    if version == '12.2.1' or version == '12.2.1.1' or version == '12.2.1.2'
+    if version == '12.2.1' or version == '12.2.1.1' or version == '12.2.1.2' or version == '12.2.1.3'
       wlst_script_dir = "#{weblogic_home_dir}/../oracle_common/common/bin"
     else
       wlst_script_dir = "#{weblogic_home_dir}/common/bin"
@@ -30,7 +30,7 @@ module DomainHelper
   end
 
   def self.wlst_execute_windows(version, script_file, weblogic_home_dir, weblogic_password, repository_password)
-    if version == '12.2.1' or version == '12.2.1.1' or version == '12.2.1.2'
+    if version == '12.2.1' or version == '12.2.1.1' or version == '12.2.1.2' or version == '12.2.1.3'
       wlst_script_dir = "#{weblogic_home_dir}\\..\\oracle_common\\common\\bin"
     else
       wlst_script_dir = "#{weblogic_home_dir}\\common\\bin"

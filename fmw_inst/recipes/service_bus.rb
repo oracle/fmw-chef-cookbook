@@ -10,7 +10,7 @@ include_recipe 'fmw_wls::install'
 
 fail 'fmw_inst attributes cannot be empty' unless node.attribute?('fmw_inst')
 
-if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3'].include?(node['fmw']['version'])
+if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3', '12.1.3'].include?(node['fmw']['version'])
   fmw_template = 'fmw_12c.rsp'
   fmw_oracle_home = node['fmw']['middleware_home_dir'] + '/osb/bin'
   install_type = 'Service Bus'
@@ -24,6 +24,8 @@ if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.1.3'].include?(node['fmw']['version'])
     fmw_installer_file = node['fmw']['tmp_dir'] + '/service_bus/fmw_12.2.1.1.0_osb.jar'
   elsif node['fmw']['version'] == '12.2.1.2'
     fmw_installer_file = node['fmw']['tmp_dir'] + '/service_bus/fmw_12.2.1.2.0_osb.jar'
+  elsif node['fmw']['version'] == '12.2.1.3'
+    fmw_installer_file = node['fmw']['tmp_dir'] + '/service_bus/fmw_12.2.1.3.0_osb.jar'
   end
 
 elsif ['10.3.6'].include?(node['fmw']['version'])
@@ -60,7 +62,7 @@ template node['fmw']['tmp_dir'] + '/sb_' + fmw_template do
             option_array: option_array)
 end
 
-if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1', '12.2.1.2'].include?(node['fmw']['version'])
+if ['10.3.6', '12.1.3', '12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3'].include?(node['fmw']['version'])
   fmw_inst_fmw_extract 'service_bus' do
     action              :extract
     source_file         node['fmw_inst']['service_bus_source_file']
