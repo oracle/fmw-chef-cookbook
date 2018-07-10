@@ -62,10 +62,9 @@ elsif ['10.3.6'].include?(node['fmw']['version'])
                      'OPSS',
                      'BAM']
 
+  path = ::File.join(node['fmw']['middleware_home_dir'],'wlserver_10.3','server','adr')
+  
   if platform_family?('windows')
-
-    path = "#{node['fmw']['middleware_home_dir']}\\wlserver_10.3\\server\\adr"
-
     execute "extract rcu file" do
       command "#{path}\\unzip.exe -o #{node['fmw_rcu']['source_file']} -d #{node['fmw']['tmp_dir']}\\rcu"
       cwd node['fmw']['tmp_dir']
@@ -74,7 +73,7 @@ elsif ['10.3.6'].include?(node['fmw']['version'])
     oracle_home_dir   = "#{node['fmw']['tmp_dir']}\\rcu\\rcuHome"
   else
     execute "extract rcu file" do
-      command "unzip -o #{node['fmw_rcu']['source_file']} -d #{node['fmw']['tmp_dir']}/rcu"
+      command "#{path}/unzip -o #{node['fmw_rcu']['source_file']} -d #{node['fmw']['tmp_dir']}/rcu"
       cwd node['fmw']['tmp_dir']
       user node['fmw']['os_user']
       group node['fmw']['os_group']
