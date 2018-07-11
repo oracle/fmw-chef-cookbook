@@ -36,7 +36,8 @@ if ['12.2.1', '12.2.1.1', '12.2.1.2', '12.2.1.3'].include?(node['fmw']['version'
                      'STB',
                      'UCSUMS',
                      'ESS',
-                     'SOAINFRA']
+                     'SOAINFRA',
+                     'MFT']
 
 elsif ['12.1.3'].include?(node['fmw']['version'])
 
@@ -48,7 +49,8 @@ elsif ['12.1.3'].include?(node['fmw']['version'])
                      'WLS',
                      'UCSUMS',
                      'ESS',
-                     'SOAINFRA']
+                     'SOAINFRA',
+                     'MFT']
 
 elsif ['10.3.6'].include?(node['fmw']['version'])
 
