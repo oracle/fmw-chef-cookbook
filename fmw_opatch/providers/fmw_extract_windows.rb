@@ -19,6 +19,7 @@ def load_current_resource
   @current_resource.tmp_dir(@new_resource.tmp_dir)
   @current_resource.version(@new_resource.version)
   @current_resource.middleware_home_dir(@new_resource.middleware_home_dir)
+  @current_resource.java_home_dir(@new_resource.java_home_dir)
 
   @current_resource.exists = true if ::File.exist?("#{@new_resource.tmp_dir}/#{@new_resource.name}")
 
@@ -33,16 +34,8 @@ action :extract do
   else
     converge_by("Create resource #{ @new_resource }") do
 
-      if @new_resource.version == '10.3.6'
-        path = "#{@new_resource.middleware_home_dir}\\wlserver_10.3\\server\\adr"
-      elsif new_resource.version == '12.1.1'
-        path = "#{@new_resource.middleware_home_dir}\\wlserver_12.1\\server\\adr"
-      else
-        path = "#{@new_resource.middleware_home_dir}\\oracle_common\\adr"
-      end
-
       execute "extract #{new_resource.name} file" do
-        command "#{path}\\unzip.exe -o #{new_resource.source_file} -d #{new_resource.tmp_dir}"
+        command "#{new_resource.java_home_dir}\\bin\\jar.exe xvf #{new_resource.source_file}"
         cwd new_resource.tmp_dir
       end
 

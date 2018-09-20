@@ -26,6 +26,7 @@ fmw_opatch_fmw_extract node['fmw_opatch']['weblogic_patch_id'] do
   os_group            node['fmw']['os_group']            if ['solaris2', 'linux'].include?(node['os'])
   tmp_dir             node['fmw']['tmp_dir']
   middleware_home_dir node['fmw']['middleware_home_dir'] if node['os'].include?('windows')
+  java_home_dir       node['fmw']['java_home_dir']       if node['os'].include?('windows')
   version             node['fmw']['version']             if node['os'].include?('windows')
 end
 
