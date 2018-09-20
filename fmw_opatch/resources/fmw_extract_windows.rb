@@ -16,6 +16,8 @@ default_action :extract
 attribute :version, kind_of: String, required: true
 # middleware home path
 attribute :middleware_home_dir, kind_of: String, required: true
+# Java home folder
+attribute :java_home_dir, kind_of: String, required: true
 # Opatch source file
 attribute :source_file, kind_of: String, required: true
 # tmp folder
