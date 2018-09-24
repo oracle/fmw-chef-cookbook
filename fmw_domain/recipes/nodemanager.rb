@@ -56,7 +56,7 @@ if node['os'].include?('windows')
               domain_dir:                    "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}".gsub('\\\\', '/').gsub('\\', '/'),
               nodemanager_address:           node['fmw_domain']['nodemanager_listen_address'],
               nodemanager_port:              node['fmw_domain']['nodemanager_port'],
-              nodemanager_secure_listener:   true,
+              nodemanager_secure_listener:   node['fmw_domain']['nodemanager_secure_listener'],
               platform_family:               node['platform_family'],
               version:                       node['fmw']['version'])
   end
@@ -73,7 +73,7 @@ else
               domain_dir:                    "#{node['fmw_domain']['domains_dir']}/#{domain_params['domain_name']}",
               nodemanager_address:           node['fmw_domain']['nodemanager_listen_address'],
               nodemanager_port:              node['fmw_domain']['nodemanager_port'],
-              nodemanager_secure_listener:   true,
+              nodemanager_secure_listener:   node['fmw_domain']['nodemanager_secure_listener'],
               platform_family:               node['platform_family'],
               version:                       node['fmw']['version'])
   end
