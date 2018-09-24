@@ -1,6 +1,7 @@
 include_attribute 'fmw_wls'
 
 default['fmw_domain']['nodemanager_port']               = 5556
+default['fmw_domain']['nodemanager_secure_listener']    = true
 default['fmw_domain']['nodemanager_service_description'] = nil
 
 if node['platform_family'] =='windows'
