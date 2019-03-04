@@ -45,7 +45,7 @@ action :apply do
   else
     converge_by("Create resource #{ @new_resource }") do
       result = false
-      shell_out!("#{@new_resource.oracle_home_dir}\\OPatch\\opatch.bat apply -silent -jre #{@new_resource.java_home_dir}/jre -oh #{@new_resource.oracle_home_dir} #{@new_resource.tmp_dir}/#{@new_resource.patch_id}", :timeout => 1200).stdout.each_line do |line|
+      shell_out!("#{@new_resource.oracle_home_dir}\\OPatch\\opatch.bat apply -silent -jre #{@new_resource.java_home_dir}/jre -oh #{@new_resource.oracle_home_dir} #{@new_resource.tmp_dir}/#{@new_resource.patch_id} -oop", :timeout => 1200).stdout.each_line do |line|
         unless line.nil?
           Chef::Log.info(line)
           if line.include? 'OPatch completed' or line.include? 'OPatch succeeded'
